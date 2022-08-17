@@ -2,6 +2,8 @@ package main;
 
 import java.util.*;
 
+import static main.CONST.*;
+
 /**
  * This is a model class to hold game information and methods. Here is game logic.
  */
@@ -10,8 +12,8 @@ public class Game {
     private Score score;    //Score object to track score and count time.
     private final Board BOARD;  //Board object of a currently running game.
     private final int WORD_PAIRS;    //Number of pairs of words.
-    private static final String DIVIDING_LINE_SHORT = "-------------------------"; //To separate score from board.
-    private static final String DIVIDING_LINE_LONG = "--------------------------------------------------";
+
+
     //To separate data between boards prints.
 
     /**
@@ -25,17 +27,17 @@ public class Game {
      */
     public Game(String difficulty, ArrayList<String> inputWords){
         score = new Score(difficulty);
-        if(difficulty.equals("Easy")){
+        if(difficulty.equals(EASY)){
             score.setChances(10);
             WORD_PAIRS = 4;
-        } else if (difficulty.equals("Hard")) {
+        } else if (difficulty.equals(HARD)) {
             score.setChances(15);
             WORD_PAIRS = 8;
         }else{
             //TODO: remove this case, handle user interface errors.
             //left only for testing purposes in development!!
             //making use of this bug till it exists.
-            score = new Score("Easy");
+            score = new Score(EASY);
             score.setChances(4);
             WORD_PAIRS = 2;
         }

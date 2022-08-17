@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.Math.pow;
+import static main.CONST.HARD;
 
 /**
  * This is a model class to hold game's score information, track it, preform needed operations.
@@ -63,7 +64,7 @@ public class Score {
      */
     private void calculateFinalScore(long time){
         int lvlCoff = 1;
-        if(DIFFICULTY.equals("Hard")) lvlCoff = 2;
+        if(DIFFICULTY.equals(HARD)) lvlCoff = 2;
         this.finalScore = (int) ( lvlCoff * (chances+0.1) *1/(pow(time,2))*100000.0);
     }
 
