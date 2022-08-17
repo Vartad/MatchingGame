@@ -6,33 +6,41 @@ import java.util.*;
  * This is a model class to hold game information and methods. Here is game logic.
  */
 public class Game {
-    private int chances;    //Number of Guess chances left.
     private Tile previousTile;  //Tile object of a previously picked Tile
+    private Score score;    //Score object to track score and count time.
     private final Board BOARD;  //Board object of a currently running game.
-    private final String DIFFICULTY;    //Difficulty level chosen by a user.
+    private final int WORDPAIRS;    //Number of pairs of words.
     private static final String DIVIDING_LINE_SHORT = "-------------------------"; //To separate score from board.
     private static final String DIVIDING_LINE_LONG = "--------------------------------------------------";
     //To separate data between boards prints.
 
+
     /**
-     *{@link Game} constructor. Depending on a chosen level (Hard or Easy), number of {@link Game#chances}
+     *{@link Game} constructor. Depending on a chosen level (Hard or Easy), number of chances
      *  (10 or 15) and number of pairs of words (4 or 8) are set. Words used in the game are randomized from inputWords
      * @param difficulty
      *  String, the difficulty level that determines the parameters of a game.
      * @param inputWords
      *  ArrayList of words from which will be randomized words for a game.
+     * @see Score keep track of chances.
      */
     public Game(String difficulty, ArrayList<String> inputWords){
-        DIFFICULTY = difficulty;
-        int wordsPairs = 0;
+        score = new Score(difficulty);
         if(difficulty.equals("Easy")){
-            chances = 10;
-            wordsPairs = 4;
+            score.setChances(10);
+            WORDPAIRS = 4;
         } else if (difficulty.equals("Hard")) {
-            chances = 15;
-            wordsPairs = 8;
+            score.setChances(15);
+            WORDPAIRS = 8;
+        }else{
+            //TODO: remove this case, handle user interface errors.
+            //left only for testing purposes in development!!
+            //making use of this bug till it exists.
+            score = new Score("Easy");
+            score.setChances(4);
+            WORDPAIRS = 2;
         }
-        ArrayList<String> randomizedWords = randomizeWords(wordsPairs,inputWords);
+        ArrayList<String> randomizedWords = randomizeWords(WORDPAIRS,inputWords);
         BOARD = new Board(randomizedWords);
     }
 
@@ -47,7 +55,7 @@ public class Game {
      *  ArrayList of randomized, shuffled words needed to create {@link Tile}'s and {@link Board}
      */
     private ArrayList<String> randomizeWords(int wordsPairs,ArrayList<String> loadedWords){
-        ArrayList<String> words = new ArrayList<String>();
+        ArrayList<String> words = new ArrayList<>();
         int randNum;
         for(int i=0;i<wordsPairs;i++){
             randNum = (int)(Math.random()*loadedWords.size());
@@ -64,16 +72,16 @@ public class Game {
     public void run(){
         Scanner scanner = new Scanner(System.in);
         //allow user to pick tiles till they have guess chances.
-        while (chances>=1){
+        while (score.getChances()>=1){
             System.out.println(DIVIDING_LINE_LONG);
-            showScore();
+            score.showScore();
             System.out.println(DIVIDING_LINE_SHORT);
             BOARD.show();
             System.out.println("\nPick a tile");
             String input = scanner.nextLine();
             Tile chosenTile = BOARD.getTile(input);
             if(chosenTile.getContent().equals("X")){
-                //chosen tile is hiden
+                //chosen tile is hidden
                 chosenTile.setContent(chosenTile.getWORD());
                 //check if there is previously picked tile. When it's beginning of a game or tiles were matched
                 //then there won't be any.
@@ -84,7 +92,8 @@ public class Game {
                         BOARD.getTile(chosenTile.getCoor()).setMatched();
                         previousTile.setMatched();
                         previousTile = null;
-                        chances++;
+                        score.incrementMatchedTiles();
+                        score.incrementChances();
                     }else {
                         //picked Tile is not matching previously picked tile. Hide previous tile.
                         previousTile.setContent("X");
@@ -102,23 +111,17 @@ public class Game {
                     System.out.println("You just choose this one, try another one.");
                 }
                 //For picking the same tile chances counter won't decrement
-                chances++;
+                score.incrementChances();
             }
-            chances --;
+            score.decrementChances();
             if(checkGameEnd()){
                 System.out.println("Congratulations! You matched all words.\nYour final score is:");
-                showScore();
-                break;
+                score.showFinalScore();
+                return;
             }
         }
-    }
-
-    /**
-     * Prints data about a currently running game.
-     */
-    public void showScore(){
-        System.out.printf("Difficulty level %s %n",DIFFICULTY);
-        System.out.printf("Guess chances    %s %n",chances);
+        System.out.printf("Ahh, not this time:)\nYou matched %s out of %s pairs. Your final score is: \n",score.getMatchedPairs(),WORDPAIRS);
+        score.showFinalScore();
     }
 
     /**
@@ -131,4 +134,6 @@ public class Game {
         }
         return true;
     }
+
+
 }
