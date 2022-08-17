@@ -46,6 +46,24 @@ public class UI {
         if(INPUT.contains("help")) showInstruction();
 //        if(INPUT.contains("restart")) throw new Exception("quit game"); TODO: add error exception to restart the game;
     }
+    public static HashMap<String, String>validateTilePick(String input,Board board){
+        result = new HashMap<>();
+        INPUT = input.toLowerCase(Locale.ROOT);
+        validateGamePhrases();
+        // Tile's coordinate length is always 2
+        if(INPUT.length()!=2){
+            result.put("valid","false");
+            return result;
+        }
+        if(board.getTile(input)==null){
+            System.out.println("There is no such tile. Coordinate has to consist of a row and a column eg 'A1'");
+            result.put("valid","false");
+            return result;
+        }
+        result.put("input", input);
+        result.put("valid", "true");
+        return result;
+    }
 
     public static void showInstruction(){
         System.out.println("""

@@ -2,6 +2,7 @@ package main;
 
 import java.util.*;
 
+import static java.lang.Boolean.parseBoolean;
 import static main.CONST.*;
 
 /**
@@ -13,8 +14,6 @@ public class Game {
     private final Board BOARD;  //Board object of a currently running game.
     private final int WORD_PAIRS;    //Number of pairs of words.
 
-
-    //To separate data between boards prints.
 
     /**
      *{@link Game} constructor. Depending on a chosen level (Hard or Easy), number of chances
@@ -56,8 +55,14 @@ public class Game {
             score.showScore();
             System.out.println(DIVIDING_LINE_SHORT);
             BOARD.show();
-            System.out.println("\nPick a tile");
-            String input = scanner.nextLine();
+            String input;
+            HashMap<String, String> validation;
+            do {
+                System.out.println("\nPick a tile");
+                validation = UI.validateTilePick(scanner.nextLine(),BOARD);
+                input = validation.get("input");
+            }
+            while (!parseBoolean(validation.get("valid")));
             Tile chosenTile = BOARD.getTile(input);
             if(chosenTile.getContent().equals("X")){
                 //chosen tile is hidden
