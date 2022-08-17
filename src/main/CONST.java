@@ -8,4 +8,6 @@ public class CONST {
     public static final String HARD = "hard";
     public static final String DIVIDING_LINE_SHORT = "-------------------------"; //To separate score from board.
     public static final String DIVIDING_LINE_LONG = "--------------------------------------------------";
+    public static final String YES = "yes";
+    public static final String NO = "no";
 }
