@@ -67,7 +67,28 @@ public class UI {
         return result;
     }
 
+    /**
+     * Prints help.
+     */
     public static void showInstruction(){
+        System.out.println("""
+                To pick a word give it's coordinate eg "A1"
+                
+                  1      2
+                A word   X
+                B X      X
+                
+                To quit game insert quit.
+                To see help  insert help.
+                To restart   insert restart.
+
+                """);
+    }
+
+    /**
+     * Prints welcome message.
+     */
+    public static void showWelcomeMessage(){
         System.out.println("""
                 Welcome in memory game! Match all word pairs to win.
 
@@ -76,18 +97,8 @@ public class UI {
                 Easy - 4 word pairs, 10 guess chances
                 Hard - 8 word pairs, 15 guess chances
                 
-                To pick a word give it's coordinate eg "A1"
+                Time is counted ;)
                 
-                  1      2
-                A word   X
-                B X      X
-                
-                Time is also counted ;)
-                
-                To quit game insert quit.
-                To see help insert help.
-                To restart insert restart.
-
                 """);
     }
 

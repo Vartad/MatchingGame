@@ -23,6 +23,7 @@ public class Main {
         FilesIO.loadFile("Words.txt");
         Scanner scanner = new Scanner(System.in);
         String input = "yes";
+        UI.showWelcomeMessage();
         UI.showInstruction();
         while(input.equals("yes")) {
             HashMap<String, String> validation;
