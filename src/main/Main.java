@@ -1,6 +1,9 @@
 package main;
 
+import java.util.HashMap;
 import java.util.Scanner;
+
+import static java.lang.Boolean.parseBoolean;
 
 /**
  * Memory game
@@ -20,13 +23,23 @@ public class Main {
         FilesIO.loadFile("Words.txt");
         Scanner scanner = new Scanner(System.in);
         String input = "yes";
+        UI.showInstruction();
         while(input.equals("yes")) {
-            System.out.println("choose difficulty level Easy or Hard.");
-            input = scanner.nextLine();
+            HashMap<String, String> validation;
+            do {
+                System.out.println("choose difficulty level Easy or Hard.");
+                validation = UI.validateDifficulty(scanner.nextLine());
+                input = validation.get("input");
+            }
+            while (!parseBoolean(validation.get("valid")));
             Game game = new Game(input, FilesIO.getWords());
             game.run();
-            System.out.println("Would you like to play again?");
-            input = scanner.nextLine();
+            do {
+                System.out.println("Would you like to play again?");
+                validation = UI.validateGameRestart(scanner.nextLine());
+                input = validation.get("input");
+            }
+            while (!parseBoolean(validation.get("valid")));
         }
     }
 }
