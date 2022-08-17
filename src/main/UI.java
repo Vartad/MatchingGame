@@ -41,11 +41,13 @@ public class UI {
         result.put("valid","false");
         return result;
     }
+
     public static void validateGamePhrases(){
 //        if(INPUT.contains("quit")) throw new Exception("quit game"); TODO: add error exception to quit the game;
         if(INPUT.contains("help")) showInstruction();
 //        if(INPUT.contains("restart")) throw new Exception("quit game"); TODO: add error exception to restart the game;
     }
+
     public static HashMap<String, String>validateTilePick(String input,Board board){
         result = new HashMap<>();
         INPUT = input.toLowerCase(Locale.ROOT);
