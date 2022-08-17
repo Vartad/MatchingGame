@@ -9,11 +9,10 @@ public class Game {
     private Tile previousTile;  //Tile object of a previously picked Tile
     private Score score;    //Score object to track score and count time.
     private final Board BOARD;  //Board object of a currently running game.
-    private final int WORDPAIRS;    //Number of pairs of words.
+    private final int WORD_PAIRS;    //Number of pairs of words.
     private static final String DIVIDING_LINE_SHORT = "-------------------------"; //To separate score from board.
     private static final String DIVIDING_LINE_LONG = "--------------------------------------------------";
     //To separate data between boards prints.
-
 
     /**
      *{@link Game} constructor. Depending on a chosen level (Hard or Easy), number of chances
@@ -28,42 +27,20 @@ public class Game {
         score = new Score(difficulty);
         if(difficulty.equals("Easy")){
             score.setChances(10);
-            WORDPAIRS = 4;
+            WORD_PAIRS = 4;
         } else if (difficulty.equals("Hard")) {
             score.setChances(15);
-            WORDPAIRS = 8;
+            WORD_PAIRS = 8;
         }else{
             //TODO: remove this case, handle user interface errors.
             //left only for testing purposes in development!!
             //making use of this bug till it exists.
             score = new Score("Easy");
             score.setChances(4);
-            WORDPAIRS = 2;
+            WORD_PAIRS = 2;
         }
-        ArrayList<String> randomizedWords = randomizeWords(WORDPAIRS,inputWords);
+        ArrayList<String> randomizedWords = randomizeWords(WORD_PAIRS,inputWords);
         BOARD = new Board(randomizedWords);
-    }
-
-    /**
-     * Randomize words for a game from the given ArrayList of loadedWords. Firstly it picks pairs of words, then it uses
-     * {@link Collections#shuffle(List)} to change order of words in the random way.
-     * @param wordsPairs
-     *  int, number of pairs of words that have to be picked.
-     * @param loadedWords
-     *  ArrayList of words loaded from file from which to pick.
-     * @return words
-     *  ArrayList of randomized, shuffled words needed to create {@link Tile}'s and {@link Board}
-     */
-    private ArrayList<String> randomizeWords(int wordsPairs,ArrayList<String> loadedWords){
-        ArrayList<String> words = new ArrayList<>();
-        int randNum;
-        for(int i=0;i<wordsPairs;i++){
-            randNum = (int)(Math.random()*loadedWords.size());
-            words.add(loadedWords.get(randNum));
-            words.add(loadedWords.get(randNum));
-        }
-        Collections.shuffle(words);
-        return words;
     }
 
     /**
@@ -120,8 +97,30 @@ public class Game {
                 return;
             }
         }
-        System.out.printf("Ahh, not this time:)\nYou matched %s out of %s pairs. Your final score is: \n",score.getMatchedPairs(),WORDPAIRS);
+        System.out.printf("Ahh, not this time:)\nYou matched %s out of %s pairs. Your final score is: \n",score.getMatchedPairs(), WORD_PAIRS);
         score.showFinalScore();
+    }
+
+    /**
+     * Randomize words for a game from the given ArrayList of loadedWords. Firstly it picks pairs of words, then it uses
+     * {@link Collections#shuffle(List)} to change order of words in the random way.
+     * @param wordsPairs
+     *  int, number of pairs of words that have to be picked.
+     * @param loadedWords
+     *  ArrayList of words loaded from file from which to pick.
+     * @return words
+     *  ArrayList of randomized, shuffled words needed to create {@link Tile}'s and {@link Board}
+     */
+    private ArrayList<String> randomizeWords(int wordsPairs,ArrayList<String> loadedWords){
+        ArrayList<String> words = new ArrayList<>();
+        int randNum;
+        for(int i=0;i<wordsPairs;i++){
+            randNum = (int)(Math.random()*loadedWords.size());
+            words.add(loadedWords.get(randNum));
+            words.add(loadedWords.get(randNum));
+        }
+        Collections.shuffle(words);
+        return words;
     }
 
     /**
@@ -134,6 +133,5 @@ public class Game {
         }
         return true;
     }
-
 
 }

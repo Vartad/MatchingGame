@@ -96,7 +96,6 @@ public class Score {
         return finalScore;
     }
 
-
     public void setChances(int chances) {
         this.chances = chances;
     }
