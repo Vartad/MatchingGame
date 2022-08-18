@@ -5,11 +5,24 @@ import java.util.Locale;
 
 import static main.CONST.*;
 
+/**
+ * This is a model class to hold validation methods and messages printing methods.
+ */
 public class UI {
 
-    private static String INPUT;
-    private static HashMap<String, String > result;
+    private static String INPUT; // every method assign inserted input value to INPUT
+    private static HashMap<String, String > result; // result of Validation. Contains :
+    // "valid" : result of validation: "false" or "true"
+    // "input" : same input as given or slightly updated
 
+    /**
+     * Validates user's input for difficulty level choice. Used in main loop.
+     * @param input String data inserted by user. Expected to be {@link CONST#HARD} or {@link CONST#EASY}
+     * @return
+     *  "valid" : if valid "true", otherwise "false"
+     *  "input" : validated input
+     * @see Main#main(String[])
+     */
     public static HashMap<String, String>validateDifficulty(String input){
         result = new HashMap<>();
         INPUT = input.toLowerCase(Locale.ROOT);
@@ -26,6 +39,13 @@ public class UI {
         return result;
     }
 
+    /**
+     * Validates user's input for choice of restarting the game. Used in the main loop.
+     * @param input String data inserted by user. Expected to be {@link CONST#YES} or {@link CONST#NO}
+     * @return
+     *  "valid" : if valid "true", otherwise "false"
+     *  "input" : validated input
+     */
     public static HashMap<String, String>validateGameRestart(String input){
         result = new HashMap<>();
         INPUT = input.toLowerCase(Locale.ROOT);
@@ -42,12 +62,29 @@ public class UI {
         return result;
     }
 
+    /**
+     * Validates user's input for options available during whole game. Called at the beginning of every validation method.
+     * available options:
+     * <ul>
+     *    <li> help - calls {@link UI#showInstruction() }</li>
+     *    <li> quit - calls {@link UI#showInstruction() } end program</li>
+     *    <li> restart - calls {@link UI#showInstruction() } restart game</li>
+     * </ul>
+     *
+     */
     public static void validateGamePhrases(){
-//        if(INPUT.contains("quit")) throw new Exception("quit game"); TODO: add error exception to quit the game;
         if(INPUT.contains("help")) showInstruction();
 //        if(INPUT.contains("restart")) throw new Exception("quit game"); TODO: add error exception to restart the game;
     }
 
+    /**
+     * Validates user's input for tile choice.
+     * @param input String data inserted by user. Expected to be {@link Tile#}'s coordinate
+     * @param board active {@link Board} in the game.
+     * @return
+     *  "valid" : if valid "true", otherwise "false"
+     *  "input" : validated input
+     */
     public static HashMap<String, String>validateTilePick(String input,Board board){
         result = new HashMap<>();
         INPUT = input.toLowerCase(Locale.ROOT);
