@@ -12,12 +12,11 @@ public class FilesIO {
     public static final String SCORE_FILE = "scores.txt";
     private static final String COL_WIDTH = "14";
 
-
     /**
      * Loads data from a "txt" file and saves it as a WORDS variable
      * @param fileName name of a file to load
      */
-    public static ArrayList<String> loadFile(String fileName) {
+    public static ArrayList<String> loadResourcesFile(String fileName) {
         ArrayList<String> WORDS = new ArrayList<>(); //words loaded from a file.
         InputStream stream = FilesIO.class.getClassLoader().getResourceAsStream(fileName);
         if( stream != null ){
@@ -33,6 +32,11 @@ public class FilesIO {
             }
         }
         return WORDS;
+    }
+
+    public static File loadFile(String fileName) throws IOException {
+        String path = new File(".").getCanonicalPath();
+        return new File(path+"/"+fileName);
     }
 
     public static void writeToFile(String fileName, String text) {

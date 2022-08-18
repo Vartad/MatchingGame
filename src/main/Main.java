@@ -36,10 +36,11 @@ public class Main {
     }
 
     private static void game() {
-        ArrayList<String> WORDS = FilesIO.loadFile("Words.txt");
+        ArrayList<String> WORDS = FilesIO.loadResourcesFile("Words.txt");
         Scanner scanner = new Scanner(System.in);
         String input = YES;
         UI.showWelcomeMessage();
+        Score.top10();
         UI.showInstruction();
         while(input.equals(YES)) {
             try {
