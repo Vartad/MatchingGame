@@ -10,7 +10,7 @@ import static main.CONST.*;
  */
 public class Game {
     private Tile previousTile;  //Tile object of a previously picked Tile
-    private Score score;    //Score object to track score and count time.
+    private final Score score;    //Score object to track score and count time.
     private final Board BOARD;  //Board object of a currently running game.
     private final int WORD_PAIRS;    //Number of pairs of words.
 
@@ -24,21 +24,15 @@ public class Game {
      *  ArrayList of words from which will be randomized words for a game.
      * @see Score keep track of chances.
      */
-    public Game(String difficulty, ArrayList<String> inputWords){
-        score = new Score(difficulty);
+    public Game(String difficulty, ArrayList<String> inputWords) throws Exception {
         if(difficulty.equals(EASY)){
-            score.setChances(10);
+            score = new Score(difficulty,10);
             WORD_PAIRS = 4;
         } else if (difficulty.equals(HARD)) {
-            score.setChances(15);
+            score = new Score(difficulty,15);
             WORD_PAIRS = 8;
-        }else{
-            //TODO: remove this case, handle user interface errors.
-            //left only for testing purposes in development!!
-            //making use of this bug till it exists.
-            score = new Score(EASY);
-            score.setChances(4);
-            WORD_PAIRS = 2;
+        }else {
+            throw new Exception();
         }
         ArrayList<String> randomizedWords = randomizeWords(WORD_PAIRS,inputWords);
         BOARD = new Board(randomizedWords);

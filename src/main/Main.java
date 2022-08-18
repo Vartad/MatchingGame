@@ -59,6 +59,8 @@ public class Main {
                 while (!parseBoolean(validation.get("valid")));
             }catch (RestartException re){
                 input = YES;
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         }
     }
