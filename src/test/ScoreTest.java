@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import main.Score.ScoreManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
@@ -41,7 +43,7 @@ public class ScoreTest {
 
     @Test
     public void top10Test(){
-        int n = 15;
+        int n = 11;
         System.out.println("Randomized score records:");
         for(int i=0;i<n;i++){
             int randNum = (int)(Math.random()*100) +100;
@@ -55,9 +57,9 @@ public class ScoreTest {
             System.out.println(Arrays.toString(scoreRecord));
             saveScoreRecord(scoreRecord);
         }
-        Record[] sortedRecords = ScoreManager.top10();
+        ArrayList<Record> sortedRecords = ScoreManager.top10();
         for(int i=1;i<10;i++){
-            if(sortedRecords[i-1].getGuessingTime()<=sortedRecords[i].getGuessingTime()){
+            if(sortedRecords.get(i - 1).getGuessingTime()<= sortedRecords.get(i).getGuessingTime()){
                 assert true;
             }else{
                 assert false;

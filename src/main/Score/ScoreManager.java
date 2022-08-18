@@ -108,7 +108,7 @@ public class ScoreManager {
      * Record[], list of top 10 scores
      * @see Record
      */
-    public static Record[] top10() {
+    public static ArrayList<Record> top10() {
         try {
 
             ArrayList<Record> records = new ArrayList<>();
@@ -124,18 +124,18 @@ public class ScoreManager {
                 records.add(r);
             }
             Collections.sort(records);
-            Record [] top10 = new Record[10];
+            ArrayList<Record> top10 = new ArrayList<>();
             int n = Math.min(records.size(), 10);
             topScoresHeadersRow();
             for(int i = 0; i < n; i++) {
-                top10[i] = records.get(i);
+                top10.add(records.get(i));
             }
             StringBuilder row = new StringBuilder();
-            for(int i=1;i<=top10.length;i++){
+            for(int i=1;i<=top10.size();i++){
                 row.append(String.format(HEADERS_WIDTH[0],i));
-                for (int j = 1; j< HEADERS_WIDTH.length; j++) {
-                    row.append(String.format(HEADERS_WIDTH[j],top10[i-1].getVariablesList()[j-1]));
-                }
+                    for (int j = 1; j < HEADERS_WIDTH.length; j++) {
+                        row.append(String.format(HEADERS_WIDTH[j], top10.get(i - 1).getVariablesList()[j - 1]));
+                    }
                 System.out.println(row);
                 row = new StringBuilder();
             }
@@ -144,7 +144,7 @@ public class ScoreManager {
         }catch (IOException e){
             System.out.println("No top scores saved yet.\n");
         }
-        return new Record[0];
+        return new ArrayList<>();
     }
 
     public static void topScoresHeadersRow(){
@@ -161,10 +161,6 @@ public class ScoreManager {
         for (int i=0;i<HEADERS.length;i++) {
             headers.append(String.format(HEADERS_WIDTH[i],HEADERS[i]));
         }
-//        for(int i=0;i<headers.length();i++){
-//            rowLine.append("_");
-//
-//        }
         System.out.println(headers);
     }
 
