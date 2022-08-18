@@ -4,7 +4,6 @@ import main.Score.ScoreManager;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-
 import static java.lang.Boolean.parseBoolean;
 import static main.CONST.*;
 import static main.FilesIO.saveScoreRecord;
@@ -120,10 +119,19 @@ public class Game {
     private ArrayList<String> randomizeWords(int wordsPairs,ArrayList<String> loadedWords){
         ArrayList<String> words = new ArrayList<>();
         int randNum;
+        boolean duplicate = false;
         for(int i=0;i<wordsPairs;i++){
             randNum = (int)(Math.random()*loadedWords.size());
-            words.add(loadedWords.get(randNum));
-            words.add(loadedWords.get(randNum));
+            for(String word:words){
+                if (word.equals(loadedWords.get(randNum))) {
+                    duplicate = true;
+                    break;
+                }
+            }
+            if(!duplicate){
+                words.add(loadedWords.get(randNum));
+                words.add(loadedWords.get(randNum));
+            }
         }
         Collections.shuffle(words);
         return words;
