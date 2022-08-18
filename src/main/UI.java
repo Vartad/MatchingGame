@@ -147,7 +147,8 @@ public class UI {
                 To quit game insert quit.
                 To see help  insert help.
                 To restart   insert restart.
-
+                to show top scores insert top scores
+                
                 """);
     }
 

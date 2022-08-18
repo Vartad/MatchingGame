@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.Math.pow;
+import static main.CONST.DIVIDING_LINE_SHORT;
 import static main.CONST.HARD;
 
 /**
@@ -48,9 +49,11 @@ public class Score {
      *  @see Score#showFinalScore()
      */
     public void showScore(){
+        System.out.println(DIVIDING_LINE_SHORT);
         System.out.printf("Difficulty level %s %n",DIFFICULTY);
         System.out.printf("Guess chances    %s %n",chances);
         System.out.printf("Time             %s %n",time());
+        System.out.println(DIVIDING_LINE_SHORT);
     }
 
     /**

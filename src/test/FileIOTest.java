@@ -17,7 +17,7 @@ import static main.FilesIO.SCORE_FILE;
 import static main.FilesIO.saveScoreRecord;
 
 public class FileIOTest {
-    
+
     @BeforeEach
     void setUp() {
         File scoreFile = new File(SCORE_FILE);

@@ -45,10 +45,8 @@ public class Game {
     public void run(){
         Scanner scanner = new Scanner(System.in);
         //allow user to pick tiles till they have guess chances.
-        while (score.getChances()>=1){
-            System.out.println(DIVIDING_LINE_LONG);
+        while (score.getChances()>0){
             score.showScore();
-            System.out.println(DIVIDING_LINE_SHORT);
             BOARD.show();
             String input;
             HashMap<String, String> validation;

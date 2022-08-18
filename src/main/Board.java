@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+import static main.CONST.DIVIDING_LINE_LONG;
+
 
 /**
  * This is a model class to hold board information and methods.
@@ -49,6 +51,7 @@ class Board {
      * Prints the board.
      */
     public void show(){
+        System.out.println(DIVIDING_LINE_LONG+DIVIDING_LINE_LONG);
         //print column headers
         StringBuilder line = new StringBuilder();
         line.append(String.format(COLUMNFORMAT, ' '));
@@ -71,6 +74,7 @@ class Board {
             }
             i++;
         }
+        System.out.println(DIVIDING_LINE_LONG+DIVIDING_LINE_LONG);
     }
 
     /**

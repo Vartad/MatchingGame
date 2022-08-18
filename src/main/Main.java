@@ -3,7 +3,6 @@ package main;
 import main.exceptions.QuitException;
 import main.exceptions.RestartException;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -29,10 +28,10 @@ public class Main {
     public static void main(String[] args) {
         try{
             game();
-        } catch (QuitException e) {
-            System.out.println(e.getMessage());
-        } catch (Exception qe){
-            System.out.println("Ehh, something go wrong.");
+        } catch (QuitException qe) {
+            System.out.println(qe.getMessage());
+        } catch (Exception e){
+            System.out.println("Quit game");
         }
     }
 
