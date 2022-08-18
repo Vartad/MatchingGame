@@ -116,7 +116,9 @@ public class Score {
             System.out.println("TOP 10 SCORES:\n");
             for (String score: allScores)
             {
-                records.add(new Record(score));
+                Record r = new Record();
+                r.loadRecord(score);
+                records.add(r);
             }
             Collections.sort(records);
             Record [] top10 = new Record[10];
