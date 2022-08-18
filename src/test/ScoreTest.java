@@ -2,9 +2,11 @@ package test;
 
 import static main.CONST.DATE_FORMATTER;
 import static main.FilesIO.saveScoreRecord;
+
+import main.Score.Record;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import main.Score;
+import main.Score.ScoreManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import java.util.Arrays;
@@ -14,10 +16,10 @@ import java.util.concurrent.TimeUnit;
 
 public class ScoreTest {
 
-    Score score;
+    ScoreManager score;
     @BeforeEach
     void setUp() {
-        score = new Score("Easy",10);
+        score = new ScoreManager("Easy",10);
         try {
             TimeUnit.SECONDS.sleep(2);
         } catch (InterruptedException e) {
@@ -53,7 +55,7 @@ public class ScoreTest {
             System.out.println(Arrays.toString(scoreRecord));
             saveScoreRecord(scoreRecord);
         }
-        main.Record[] sortedRecords = Score.top10();
+        Record[] sortedRecords = ScoreManager.top10();
         for(int i=1;i<10;i++){
             if(sortedRecords[i-1].getGuessingTime()<=sortedRecords[i].getGuessingTime()){
                 assert true;

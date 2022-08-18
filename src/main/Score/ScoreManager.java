@@ -1,4 +1,6 @@
-package main;
+package main.Score;
+
+import main.FilesIO;
 
 import java.io.IOException;
 import java.util.*;
@@ -10,7 +12,7 @@ import static main.CONST.*;
 /**
  * This is a model class to hold game's score information, track it, preform needed operations.
  */
-public class Score {
+public class ScoreManager {
     private int chances;    //Number of Guess chances left.
     private int guesses; //Number of taken guesses
     private int finalScore; //final Score calculated with formula in calculateFinalScore()
@@ -20,13 +22,13 @@ public class Score {
     private static long START_TIME; //time when the game start.
 
     /**
-     * {@link Score} constructor. Keeps data related with score calculation.
+     * {@link ScoreManager} constructor. Keeps data related with score calculation.
      * @param difficulty
      * String, level of game difficulty.
      * @param chances
      * int number of chances allowed in a game.
      */
-    public Score(String difficulty, int chances){
+    public ScoreManager(String difficulty, int chances){
         guesses = 0;
         this.chances = chances;
         START_TIME = new Date().getTime();
@@ -37,7 +39,7 @@ public class Score {
 
     /**
      * Prints data about a currently running game.
-     *  @see Score#showFinalScore()
+     *  @see ScoreManager#showFinalScore()
      */
     public void showScore(){
         System.out.println(DIVIDING_LINE_SHORT);
@@ -48,11 +50,11 @@ public class Score {
     }
 
     /**
-     * Print final score. Calls {@link Score#time()} and {@link Score#calculateFinalScore(long)} just before to
+     * Print final score. Calls {@link ScoreManager#time()} and {@link ScoreManager#calculateFinalScore(long)} just before to
      * calculate achieved results.
-     * @see Score#time()
-     * @see Score#calculateFinalScore(long)
-     * @see Score#showScore()
+     * @see ScoreManager#time()
+     * @see ScoreManager#calculateFinalScore(long)
+     * @see ScoreManager#showScore()
      */
     public void showFinalScore(){
         System.out.println(DIVIDING_LINE_SHORT);
@@ -64,13 +66,13 @@ public class Score {
     }
 
     /**
-     * Calculates {@link Score#finalScore} of the game. Score depends on {@link Score#DIFFICULTY}, {@link Score#chances}
+     * Calculates {@link ScoreManager#finalScore} of the game. Score depends on {@link ScoreManager#DIFFICULTY}, {@link ScoreManager#chances}
      * and time. The harder difficulty level and the more chances left and the shorter time, the higher score is.
      * @param time
      *  long time when the game ends.
-     * @see Score#time()
-     * @see Score#showScore()
-     * @see Score#showFinalScore()
+     * @see ScoreManager#time()
+     * @see ScoreManager#showScore()
+     * @see ScoreManager#showFinalScore()
      */
     private void calculateFinalScore(long time){
         int lvlCoff = 1;
@@ -80,7 +82,7 @@ public class Score {
 
     /**
      * Ends game time recording, calculates score.
-     * @see Score#calculateFinalScore(long)
+     * @see ScoreManager#calculateFinalScore(long)
      */
     public void finish(){
         endTime = time();

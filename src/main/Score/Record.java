@@ -1,4 +1,4 @@
-package main;
+package main.Score;
 
 /**
  * This is a model class to hold score data.

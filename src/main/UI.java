@@ -1,5 +1,6 @@
 package main;
 
+import main.Score.ScoreManager;
 import main.exceptions.QuitException;
 import main.exceptions.RestartException;
 
@@ -122,7 +123,7 @@ public class UI {
             if (scanner.nextLine().toLowerCase(Locale.ROOT).equals(YES)) {
                 if (INPUT.contains("quit")) throw new QuitException("See you next time :D");
                 if (INPUT.contains("restart")) throw new RestartException("let's start over");
-                if (INPUT.contains("top scores"))Score.top10();
+                if (INPUT.contains("top scores")) ScoreManager.top10();
             }
         }
     }

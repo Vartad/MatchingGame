@@ -1,5 +1,7 @@
 package main;
 
+import main.Score.ScoreManager;
+
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -12,7 +14,7 @@ import static main.FilesIO.saveScoreRecord;
  */
 public class Game {
     private Tile previousTile;  //Tile object of a previously picked Tile
-    private final Score score;    //Score object to track score and count time.
+    private final ScoreManager score;    //Score object to track score and count time.
     private final Board BOARD;  //Board object of a currently running game.
     private final int WORD_PAIRS;    //Number of pairs of words.
 
@@ -24,14 +26,14 @@ public class Game {
      *  String, the difficulty level that determines the parameters of a game.
      * @param inputWords
      *  ArrayList of words from which will be randomized words for a game.
-     * @see Score keep track of chances.
+     * @see ScoreManager keep track of chances.
      */
     public Game(String difficulty, ArrayList<String> inputWords) throws Exception {
         if(difficulty.equals(EASY)){
-            score = new Score(difficulty,10);
+            score = new ScoreManager(difficulty,10);
             WORD_PAIRS = 4;
         } else if (difficulty.equals(HARD)) {
-            score = new Score(difficulty,15);
+            score = new ScoreManager(difficulty,15);
             WORD_PAIRS = 8;
         }else {
             throw new Exception();
@@ -170,7 +172,7 @@ public class Game {
             };
             saveScoreRecord(scoreRecord);
         }
-        Score.top10();
+        ScoreManager.top10();
     }
     /**
      * Method executes set of instructions if user loses
@@ -179,6 +181,6 @@ public class Game {
         score.finish();
         System.out.printf("Ahh, not this time:)\nYou matched %s out of %s pairs.\n",score.getMatchedPairs(), WORD_PAIRS);
         score.showFinalScore();
-        Score.top10();
+        ScoreManager.top10();
     }
 }

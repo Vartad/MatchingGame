@@ -1,5 +1,6 @@
 package main;
 
+import main.Score.ScoreManager;
 import main.exceptions.QuitException;
 import main.exceptions.RestartException;
 
@@ -41,7 +42,7 @@ public class Main {
         String input = YES;
         UI.showWelcomeMessage();
         try {
-            Score.top10();
+            ScoreManager.top10();
         }catch (Exception e){
             System.out.println("Scores file seems to be damaged, consider deleting it");
         }
