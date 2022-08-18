@@ -81,11 +81,24 @@ public class UI {
             System.out.println("Try to come up with a nickname");
             result.put("valid", "false");
             return result;
-        }else{
-            result.put("input", input);
-            result.put("valid", "true");
+        }
+        if (input.length()==0){
+            result.put("valid", "false");
             return result;
+        }
+        if (input.contains(" ")){
+            result.put("valid", "false");
+            return result;
+        }
+        if (input.contains("|")){
+                System.out.println("You can't use '|' in your name");
+                result.put("valid", "false");
+                return result;
             }
+        result.put("input", input);
+        result.put("valid", "true");
+        return result;
+
     }
 
 
