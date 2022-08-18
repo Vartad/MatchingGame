@@ -78,7 +78,7 @@ public class Score {
     private void calculateFinalScore(long time){
         int lvlCoff = 1;
         if(DIFFICULTY.equals(HARD)) lvlCoff = 2;
-        this.finalScore = (int) ( lvlCoff * (chances)/(pow(time,2))*100000.0);
+        this.finalScore = (int) ( lvlCoff * (chances+1)/(pow(time,2))*10000.0);
     }
 
     public void finish(){

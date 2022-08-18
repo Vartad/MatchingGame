@@ -13,15 +13,18 @@ public class ScoreTest {
     @Test
     @DisplayName("final score calcualtion test")
     public void testCalculateFinalScore() {
-        score = new Score("Easy");
+        score = new Score("Easy",10);
         try {
             TimeUnit.SECONDS.sleep(2);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        score.incrementChances();
-        score.incrementChances();
+        for(int i =0;i<10;i++){
+            score.incrementMatchedTiles();
+            score.decrementChances();
+        }
+        score.finish();
         score.showFinalScore();
-        assertEquals(score.getFinalScore(),50.0,0);
+        assertEquals(score.getFinalScore(),2500.0,0);
     }
 }
