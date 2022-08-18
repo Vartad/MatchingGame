@@ -1,14 +1,12 @@
 package test;
+
 import static main.CONST.DATE_FORMATTER;
 import static main.FilesIO.saveScoreRecord;
-import static org.junit.Assert.assertEquals;
-
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import main.Score;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
@@ -37,16 +35,12 @@ public class ScoreTest {
     @Test
     @DisplayName("final score calcualtion test")
     public void testCalculateFinalScore() {
-        assertEquals(score.getFinalScore(),2500.0,0);
+        Assertions.assertEquals(score.getFinalScore(), 2500.0, 0);
     }
 
     @Test
     public void top10Test() throws IOException {
 
-        //wygeneruj 10 rekordów
-        //zapisz 10 rekordów do pliku
-        //uruchom top10()
-        // sprawdz czy kazda linijka jest taka sama
         int n = 15;
         System.out.println("Randomized score records:");
         for(int i=0;i<n;i++){

@@ -15,4 +15,6 @@ public class CONST {
     public static final String NO = "no";
 
     public static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("dd/MM/yyyy");
+
+    public static final String TEST_FILE = "testFile.txt";
 }
