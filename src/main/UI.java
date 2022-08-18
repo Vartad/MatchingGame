@@ -96,12 +96,13 @@ public class UI {
      */
     public static void validateGamePhrases(){
         if(INPUT.contains("help")) showInstruction();
-        if (INPUT.contains("quit")||INPUT.contains("restart")){
+        if (INPUT.contains("quit")||INPUT.contains("restart")||INPUT.contains("top scores")){
             System.out.println("Are you sure you want to "+ INPUT+"? (yes/no)");
             Scanner scanner = new Scanner(System.in);
             if (scanner.nextLine().toLowerCase(Locale.ROOT).equals(YES)) {
                 if (INPUT.contains("quit")) throw new QuitException("See you next time :D");
                 if (INPUT.contains("restart")) throw new RestartException("let's start over");
+                if (INPUT.contains("top scores"))Score.top10();
             }
         }
     }
