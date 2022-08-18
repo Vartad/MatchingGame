@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import main.Score;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
+
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class ScoreTest {
@@ -26,5 +28,10 @@ public class ScoreTest {
         score.finish();
         score.showFinalScore();
         assertEquals(score.getFinalScore(),2500.0,0);
+    }
+
+    @Test
+    public void top10Test() throws IOException {
+        Score.top10();
     }
 }
