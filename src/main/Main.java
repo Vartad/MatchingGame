@@ -1,9 +1,13 @@
 package main;
 
+import main.exceptions.QuitException;
+import main.exceptions.RestartException;
+
 import java.util.HashMap;
 import java.util.Scanner;
 
 import static java.lang.Boolean.parseBoolean;
+import static main.CONST.YES;
 
 /**
  * Memory game
@@ -19,28 +23,44 @@ public class Main {
      * Words are loaded from text file.
      *
      */
+
     public static void main(String[] args) {
-        FilesIO.loadFile("Words.txt");
-        Scanner scanner = new Scanner(System.in);
-        String input = "yes";
-        UI.showWelcomeMessage();
-        UI.showInstruction();
-        while(input.equals("yes")) {
-            HashMap<String, String> validation;
-            do {
-                System.out.println("choose difficulty level Easy or Hard.");
-                validation = UI.validateDifficulty(scanner.nextLine());
-                input = validation.get("input");
-            }
-            while (!parseBoolean(validation.get("valid")));
-            Game game = new Game(input, FilesIO.getWords());
-            game.run();
-            do {
-                System.out.println("Would you like to play again?");
-                validation = UI.validateGameRestart(scanner.nextLine());
-                input = validation.get("input");
-            }
-            while (!parseBoolean(validation.get("valid")));
+        try{
+            game();
+        } catch (QuitException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception qe){
+            System.out.println("Ehh, something go wrong.");
         }
     }
+
+    private static void game() {
+        FilesIO.loadFile("Words.txt");
+        Scanner scanner = new Scanner(System.in);
+        String input = YES;
+        UI.showWelcomeMessage();
+        UI.showInstruction();
+        while(input.equals(YES)) {
+            try {
+                HashMap<String, String> validation;
+                do {
+                    System.out.println("choose difficulty level Easy or Hard.");
+                    validation = UI.validateDifficulty(scanner.nextLine());
+                    input = validation.get("input");
+                }
+                while (!parseBoolean(validation.get("valid")));
+                Game game = new Game(input, FilesIO.getWords());
+                game.run();
+                do {
+                    System.out.println("Would you like to play again?");
+                    validation = UI.validateGameRestart(scanner.nextLine());
+                    input = validation.get("input");
+                }
+                while (!parseBoolean(validation.get("valid")));
+            }catch (RestartException re){
+                input = YES;
+            }
+        }
+    }
+
 }

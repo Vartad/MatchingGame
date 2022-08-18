@@ -1,7 +1,11 @@
 package main;
 
+import main.exceptions.QuitException;
+import main.exceptions.RestartException;
+
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Scanner;
 
 import static main.CONST.*;
 
@@ -74,7 +78,14 @@ public class UI {
      */
     public static void validateGamePhrases(){
         if(INPUT.contains("help")) showInstruction();
-//        if(INPUT.contains("restart")) throw new Exception("quit game"); TODO: add error exception to restart the game;
+        if (INPUT.contains("quit")||INPUT.contains("restart")){
+            System.out.println("Are you sure you want to "+ INPUT+"? (yes/no)");
+            Scanner scanner = new Scanner(System.in);
+            if (scanner.nextLine().toLowerCase(Locale.ROOT).equals(YES)) {
+                if (INPUT.contains("quit")) throw new QuitException("See you next time :D");
+                if (INPUT.contains("restart")) throw new RestartException("let's start over");
+            }
+        }
     }
 
     /**
@@ -95,7 +106,7 @@ public class UI {
             return result;
         }
         if(board.getTile(input)==null){
-            System.out.println("There is no such tile. Coordinate has to consist of a row and a column eg 'A1'");
+            System.out.println("There is no such a tile. Coordinate has to consist of a row and a column  values eg 'A1'");
             result.put("valid","false");
             return result;
         }
