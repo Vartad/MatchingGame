@@ -1,9 +1,11 @@
 package main;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static java.lang.Boolean.parseBoolean;
 import static main.CONST.*;
+import static main.FilesIO.saveScoreRecord;
 
 /**
  * This is a model class to hold game information and methods. Here is game logic.
@@ -93,8 +95,7 @@ public class Game {
             }
             score.decrementChances();
             if(checkGameEnd()){
-                System.out.println("Congratulations! You matched all words.\nYour final score is:");
-                score.showFinalScore();
+                gameWon();
                 return;
             }
         }
@@ -133,6 +134,32 @@ public class Game {
             if(!entry.getValue().isMatched()) return false;
         }
         return true;
+    }
+
+    private void gameWon(){
+        score.finish();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Congratulations! You matched all words.\nYour final score is:");
+        score.showFinalScore();
+        System.out.println("Would you like to save you score?");
+        if(scanner.nextLine().toLowerCase(Locale.ROOT).equals("yes")){
+            String input;
+            HashMap<String, String> validation;
+            do {
+                System.out.println("\nWhat is your name?");
+                validation = UI.validateUserName(scanner.nextLine());
+                input = validation.get("input");
+            }
+            while (!parseBoolean(validation.get("valid")));
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            String[] scoreRecord = new String[]{
+                    input,
+                    formatter.format(new Date()),
+                    Long.toString(score.getEndTime()),
+                    Integer.toString(score.getCHANCES_START()-score.getChances())
+            };
+            saveScoreRecord(scoreRecord);
+        }
     }
 
 }

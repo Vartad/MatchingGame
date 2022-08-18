@@ -13,15 +13,29 @@ public class Score {
     private int chances;    //Number of Guess chances left.
     private int finalScore;
     private int matchedPairs;
+
+    public long getEndTime() {
+        return endTime;
+    }
+
+    private long endTime;
     public final String DIFFICULTY;    //Difficulty level chosen by a user.
     private static long START_TIME;
+
+    public int getCHANCES_START() {
+        return CHANCES_START;
+    }
+
+    private final int CHANCES_START;
 
     /**
      * {@link Score} constructor. Keeps data related with score calculation.
      * @param difficulty
      *  String, level of game difficulty.
      */
-    public Score(String difficulty){
+    public Score(String difficulty, int chances){
+        CHANCES_START = chances;
+        this.chances = chances;
         START_TIME = new Date().getTime();
         DIFFICULTY = difficulty;
         finalScore = 0;
@@ -46,10 +60,9 @@ public class Score {
      * @see Score#showScore()
      */
     public void showFinalScore(){
-        long time = time();
-        calculateFinalScore(time);
         System.out.printf("Difficulty level   %s %n",DIFFICULTY);
-        System.out.printf("Time               %s %n",time);
+        System.out.printf("Time               %s %n",endTime);
+        System.out.printf("Guessing tries     %s %n",CHANCES_START-chances);
         System.out.printf("Final score        %s %n",finalScore);
     }
 
@@ -65,7 +78,12 @@ public class Score {
     private void calculateFinalScore(long time){
         int lvlCoff = 1;
         if(DIFFICULTY.equals(HARD)) lvlCoff = 2;
-        this.finalScore = (int) ( lvlCoff * (chances+0.1) *1/(pow(time,2))*100000.0);
+        this.finalScore = (int) ( lvlCoff * (chances)/(pow(time,2))*100000.0);
+    }
+
+    public void finish(){
+        endTime = time();
+        calculateFinalScore(endTime);
     }
 
     /**
@@ -95,10 +113,6 @@ public class Score {
 
     public double getFinalScore() {
         return finalScore;
-    }
-
-    public void setChances(int chances) {
-        this.chances = chances;
     }
 
     public int getMatchedPairs() {
