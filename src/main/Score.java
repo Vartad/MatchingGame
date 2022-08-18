@@ -14,31 +14,21 @@ import static main.CONST.HARD;
 public class Score {
     private int chances;    //Number of Guess chances left.
     private int guesses; //Number of taken guesses
-    private int finalScore;
-    private int matchedPairs;
-
-    public long getEndTime() {
-        return endTime;
-    }
-
-    private long endTime;
+    private int finalScore; //final Score calculated with formula in calculateFinalScore()
+    private int matchedPairs; //number of pairs matched
+    private long endTime; //time of playing the game
     public final String DIFFICULTY;    //Difficulty level chosen by a user.
-    private static long START_TIME;
-
-    public int getCHANCES_START() {
-        return CHANCES_START;
-    }
-
-    private final int CHANCES_START;
+    private static long START_TIME; //time when the game start.
 
     /**
      * {@link Score} constructor. Keeps data related with score calculation.
      * @param difficulty
-     *  String, level of game difficulty.
+     * String, level of game difficulty.
+     * @param chances
+     * int number of chances allowed in a game.
      */
     public Score(String difficulty, int chances){
         guesses = 0;
-        CHANCES_START = chances;
         this.chances = chances;
         START_TIME = new Date().getTime();
         DIFFICULTY = difficulty;
@@ -88,6 +78,10 @@ public class Score {
         this.finalScore = (int) ( lvlCoff * (chances+1)/(pow(time,2))*10000.0);
     }
 
+    /**
+     * Ends game time recording, calculates score.
+     * @see Score#calculateFinalScore(long)
+     */
     public void finish(){
         endTime = time();
         calculateFinalScore(endTime);
@@ -106,6 +100,41 @@ public class Score {
                 toSeconds(now - START_TIME);
     }
 
+    /**
+     * Takes top 10 of scores with the shortest time.
+     * @return
+     * Record[], list of top 10 scores
+     * @see Record
+     */
+    public static Record[] top10() {
+        try {
+            ArrayList<Record> records = new ArrayList<>();
+            ArrayList<String> allScores ;
+
+            allScores = FilesIO.loadFile(FilesIO.SCORE_FILE);
+
+            System.out.println("TOP 10 SCORES:\n");
+            for (String score: allScores)
+            {
+                records.add(new Record(score));
+            }
+            Collections.sort(records);
+            Record [] top10 = new Record[10];
+            int n = Math.min(records.size(), 10);
+            for(int i = 0; i < n; i++) {
+                top10[i] = records.get(i);
+            }
+            for(int i=1;i<=top10.length;i++){
+                System.out.println(i+". "+ top10[i-1]);
+            }
+            System.out.println();
+            return top10;
+        }catch (IOException e){
+            System.out.println("No top scores saved yet.\n");
+        }
+        return new Record[0];
+    }
+
     public int getChances() {
         return chances;
     }
@@ -114,53 +143,28 @@ public class Score {
         this.chances--;
     }
 
-    public double getFinalScore() {
-        return finalScore;
-    }
-
     public int getMatchedPairs() {
         return matchedPairs;
-    }
-
-    public void incrementGuesses(){
-        guesses++;
-    }
-
-    public int getGuesses(){
-        return this.guesses;
     }
 
     public void incrementMatchedTiles() {
         matchedPairs++;
     }
 
-    public static Record[] top10() {
-        try {
-        ArrayList<Record> records = new ArrayList<>();
-        ArrayList<String> allScores ;
+    public int getGuesses(){
+        return this.guesses;
+    }
 
-            allScores = FilesIO.loadFile(FilesIO.SCORE_FILE);
+    public void incrementGuesses(){
+        guesses++;
+    }
 
-        System.out.println("TOP 10 SCORES:\n");
-        for (String score: allScores)
-        {
-            records.add(new Record(score));
-        }
-        Collections.sort(records);
-        Record [] top10 = new Record[10];
-            int n = Math.min(records.size(), 10);
-        for(int i = 0; i < n; i++) {
-            top10[i] = records.get(i);
-        }
-        for(int i=1;i<=top10.length;i++){
-            System.out.println(i+". "+ top10[i-1]);
-        }
-        System.out.println();
-        return top10;
-        }catch (IOException e){
-            System.out.println("No top scores saved yet.\n");
-        }
-        return new Record[0];
+    public long getEndTime() {
+        return endTime;
+    }
+
+    public double getFinalScore() {
+        return finalScore;
     }
 
 }
