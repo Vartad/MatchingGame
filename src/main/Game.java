@@ -99,7 +99,7 @@ public class Game {
                 return;
             }
         }
-        System.out.printf("Ahh, not this time:)\nYou matched %s out of %s pairs. Your final score is: \n",score.getMatchedPairs(), WORD_PAIRS);
+        gameLost();
         score.showFinalScore();
     }
 
@@ -162,4 +162,8 @@ public class Game {
         }
     }
 
+    private void gameLost(){
+        score.finish();
+        System.out.printf("Ahh, not this time:)\nYou matched %s out of %s pairs. Your final score is: \n",score.getMatchedPairs(), WORD_PAIRS);
+    }
 }
