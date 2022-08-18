@@ -35,7 +35,7 @@ public class Main {
         }
     }
 
-    private static void game() throws IOException {
+    private static void game(){
         ArrayList<String> WORDS = FilesIO.loadResourcesFile("Words.txt");
         Scanner scanner = new Scanner(System.in);
         String input = YES;

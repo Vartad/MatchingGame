@@ -1,6 +1,7 @@
 package main;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import static java.lang.Boolean.parseBoolean;
 import static main.CONST.*;
@@ -64,17 +65,25 @@ public class Game {
                 //then there won't be any.
                 if(previousTile != null) {
                     if (previousTile.getWORD().equals(chosenTile.getWORD())) {
-                        //matching tiles are matched. Keep them visible, set that they are matched.
+                        // Keep them visible, set that they are matched.
                         BOARD.getTile(previousTile.getCoor()).setMatched();
                         BOARD.getTile(chosenTile.getCoor()).setMatched();
                         previousTile.setMatched();
                         previousTile = null;
-                        score.incrementMatchedTiles();
-                        score.incrementChances();
+                        score.incrementGuesses();
                     }else {
-                        //picked Tile is not matching previously picked tile. Hide previous tile.
+                        //picked Tile is not matching previously picked tile. Hide both tiles, decrement chances.
+                        BOARD.show();
+                        try {
+                            TimeUnit.SECONDS.sleep(1);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
                         previousTile.setContent("X");
-                        previousTile = chosenTile;
+                        previousTile = null;
+                        chosenTile.setContent("X");
+                        score.decrementChances();
+                        score.incrementGuesses();
                     }
                 }else{
                     //there is no previously picked tile.
@@ -85,19 +94,15 @@ public class Game {
                 if(chosenTile.isMatched()){
                     System.out.println("You already matched this one, try another.");
                 }else {
-                    System.out.println("You just choose this one, try another one.");
+                    System.out.println("You just choose this one, try another.");
                 }
-                //For picking the same tile chances counter won't decrement
-                score.incrementChances();
             }
-            score.decrementChances();
             if(checkGameEnd()){
                 gameWon();
                 return;
             }
         }
         gameLost();
-        score.showFinalScore();
     }
 
     /**
@@ -137,6 +142,7 @@ public class Game {
         score.finish();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Congratulations! You matched all words.\nYour final score is:");
+        BOARD.show();
         score.showFinalScore();
         System.out.println("Would you like to save you score?");
         if(scanner.nextLine().toLowerCase(Locale.ROOT).equals("yes")){
@@ -153,14 +159,17 @@ public class Game {
                     input,
                     DATE_FORMATTER.format(new Date()),
                     Long.toString(score.getEndTime()),
-                    Integer.toString(score.getCHANCES_START()-score.getChances())
+                    Integer.toString(score.getGuesses())
             };
             saveScoreRecord(scoreRecord);
         }
+        Score.top10();
     }
 
     private void gameLost(){
         score.finish();
-        System.out.printf("Ahh, not this time:)\nYou matched %s out of %s pairs. Your final score is: \n",score.getMatchedPairs(), WORD_PAIRS);
+        System.out.printf("Ahh, not this time:)\nYou matched %s out of %s pairs.\n",score.getMatchedPairs(), WORD_PAIRS);
+        score.showFinalScore();
+        Score.top10();
     }
 }

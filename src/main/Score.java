@@ -13,6 +13,7 @@ import static main.CONST.HARD;
  */
 public class Score {
     private int chances;    //Number of Guess chances left.
+    private int guesses; //Number of taken guesses
     private int finalScore;
     private int matchedPairs;
 
@@ -36,6 +37,7 @@ public class Score {
      *  String, level of game difficulty.
      */
     public Score(String difficulty, int chances){
+        guesses = 0;
         CHANCES_START = chances;
         this.chances = chances;
         START_TIME = new Date().getTime();
@@ -51,7 +53,6 @@ public class Score {
     public void showScore(){
         System.out.println(DIVIDING_LINE_SHORT);
         System.out.printf("Difficulty level %s %n",DIFFICULTY);
-        System.out.printf("Guess chances    %s %n",chances);
         System.out.printf("Time             %s %n",time());
         System.out.println(DIVIDING_LINE_SHORT);
     }
@@ -64,10 +65,12 @@ public class Score {
      * @see Score#showScore()
      */
     public void showFinalScore(){
+        System.out.println(DIVIDING_LINE_SHORT);
         System.out.printf("Difficulty level   %s %n",DIFFICULTY);
         System.out.printf("Time               %s %n",endTime);
-        System.out.printf("Guessing tries     %s %n",CHANCES_START-chances);
+        System.out.printf("Guessing tries     %s %n",guesses);
         System.out.printf("Final score        %s %n",finalScore);
+        System.out.println(DIVIDING_LINE_SHORT);
     }
 
     /**
@@ -107,10 +110,6 @@ public class Score {
         return chances;
     }
 
-    public void incrementChances() {
-        this.chances++;
-    }
-
     public void decrementChances() {
         this.chances--;
     }
@@ -123,28 +122,45 @@ public class Score {
         return matchedPairs;
     }
 
+    public void incrementGuesses(){
+        guesses++;
+    }
+
+    public int getGuesses(){
+        return this.guesses;
+    }
+
     public void incrementMatchedTiles() {
         matchedPairs++;
     }
 
-    public static Record[] top10() throws IOException {
+    public static Record[] top10() {
+        try {
         ArrayList<Record> records = new ArrayList<>();
-        ArrayList<String> allScores = FilesIO.loadFile(FilesIO.SCORE_FILE);
-        System.out.println("all saved scores:\n");
+        ArrayList<String> allScores ;
+
+            allScores = FilesIO.loadFile(FilesIO.SCORE_FILE);
+
+        System.out.println("TOP 10 SCORES:\n");
         for (String score: allScores)
         {
             records.add(new Record(score));
         }
         Collections.sort(records);
         Record [] top10 = new Record[10];
-        for(int i = 0; i < 10; i++) {
+            int n = Math.min(records.size(), 10);
+        for(int i = 0; i < n; i++) {
             top10[i] = records.get(i);
         }
-        for(Record record : top10){
-            record.print();
+        for(int i=1;i<=top10.length;i++){
+            System.out.println(i+". "+ top10[i-1]);
         }
+        System.out.println();
         return top10;
-
+        }catch (IOException e){
+            System.out.println("No top scores saved yet.\n");
+        }
+        return new Record[0];
     }
 
 }
