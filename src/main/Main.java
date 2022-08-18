@@ -3,6 +3,7 @@ package main;
 import main.exceptions.QuitException;
 import main.exceptions.RestartException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -35,7 +36,7 @@ public class Main {
     }
 
     private static void game() {
-        FilesIO.loadFile("Words.txt");
+        ArrayList<String> WORDS = FilesIO.loadFile("Words.txt");
         Scanner scanner = new Scanner(System.in);
         String input = YES;
         UI.showWelcomeMessage();
@@ -49,7 +50,7 @@ public class Main {
                     input = validation.get("input");
                 }
                 while (!parseBoolean(validation.get("valid")));
-                Game game = new Game(input, FilesIO.getWords());
+                Game game = new Game(input, WORDS);
                 game.run();
                 do {
                     System.out.println("Would you like to play again?");
