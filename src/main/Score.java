@@ -43,6 +43,7 @@ public class Score {
     public void showScore(){
         System.out.println(DIVIDING_LINE_SHORT);
         System.out.printf("Difficulty level %s %n",DIFFICULTY);
+        System.out.printf("Chances          %s %n",chances);
         System.out.printf("Time             %s %n",time());
         System.out.println(DIVIDING_LINE_SHORT);
     }
