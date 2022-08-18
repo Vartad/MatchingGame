@@ -1,6 +1,6 @@
 package main;
 
-class Record implements Comparable{
+public class Record implements Comparable{
 
     public String getName() {
         return name;

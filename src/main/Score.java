@@ -124,7 +124,7 @@ public class Score {
         matchedPairs++;
     }
 
-    public static void top10() throws IOException {
+    public static Record[] top10() throws IOException {
         ArrayList<Record> records = new ArrayList<>();
         ArrayList<String> allScores = FilesIO.loadFile(FilesIO.SCORE_FILE);
         System.out.println("all saved scores:\n");
@@ -133,11 +133,15 @@ public class Score {
             records.add(new Record(score));
         }
         Collections.sort(records);
-        for(Record record : records){
+        Record [] top10 = new Record[10];
+        for(int i = 0; i < 10; i++) {
+            top10[i] = records.get(i);
+        }
+        for(Record record : top10){
             record.print();
         }
+        return top10;
 
     }
-
 
 }

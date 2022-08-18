@@ -1,5 +1,6 @@
 package test;
 
+
 import main.FilesIO;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -7,7 +8,6 @@ import org.junit.jupiter.api.DisplayName;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -29,10 +29,9 @@ public class FileIOTest {
     public void testSaveScore() throws IOException {
         String TEST_SCORE_FILE = FilesIO.SCORE_FILE;
         Files.deleteIfExists(Path.of(TEST_SCORE_FILE));
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         String[] scoreRecord = new String[]{
                 "User",
-                formatter.format(new Date()),
+                DATE_FORMATTER.format(new Date()),
                 Long.toString(900),
                 Integer.toString(15)
         };
@@ -44,7 +43,7 @@ public class FileIOTest {
         assertEquals(savedData.get(0),correctlySavedUser);
         String[] scoreRecord1 = new String[]{
                 "User1",
-                formatter.format(new Date()),
+                DATE_FORMATTER.format(new Date()),
                 Long.toString(50),
                 Integer.toString(10)
         };
