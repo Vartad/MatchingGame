@@ -69,10 +69,12 @@ public class UI {
     /**
      * Validates user's input for options available during whole game. Called at the beginning of every validation method.
      * available options:
+     * @throws QuitException to quit the game.
+     * @throws RestartException to restart the game.
      * <ul>
      *    <li> help - calls {@link UI#showInstruction() }</li>
-     *    <li> quit - calls {@link UI#showInstruction() } end program</li>
-     *    <li> restart - calls {@link UI#showInstruction() } restart game</li>
+     *    <li> quit - end game by throwing {@link QuitException}</li>
+     *    <li> restart - restart game by throwing {@link RestartException}</li>
      * </ul>
      *
      */
