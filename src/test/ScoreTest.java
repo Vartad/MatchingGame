@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import main.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
@@ -39,12 +38,11 @@ public class ScoreTest {
     }
 
     @Test
-    public void top10Test() throws IOException {
-
+    public void top10Test(){
         int n = 15;
         System.out.println("Randomized score records:");
         for(int i=0;i<n;i++){
-            int randNum = (int)(Math.random()*100);
+            int randNum = (int)(Math.random()*100) +100;
             int randGuesses = (int)(Math.random()*10);
             String[] scoreRecord = new String[]{
                     "User"+randNum,

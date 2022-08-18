@@ -66,6 +66,13 @@ public class UI {
         return result;
     }
 
+    /**
+     * Validates user's input for name after won game.
+     * @param input String data inserted by user.
+     * @return
+     *  "valid" : if valid "true", otherwise "false"
+     *  "input" : validated input
+     */
     public static HashMap<String, String>validateUserName(String input){
         result = new HashMap<>();
         INPUT = input.toLowerCase(Locale.ROOT);

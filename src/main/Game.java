@@ -138,6 +138,13 @@ public class Game {
         return true;
     }
 
+    /**
+     * Method executes set of instructions if user wins:
+     * <ul>
+     *     <li>allow to save score</li>
+     *     <li>shows top 10 scores</li>
+     * </ul>
+     */
     private void gameWon(){
         score.finish();
         Scanner scanner = new Scanner(System.in);
@@ -165,7 +172,9 @@ public class Game {
         }
         Score.top10();
     }
-
+    /**
+     * Method executes set of instructions if user loses
+     */
     private void gameLost(){
         score.finish();
         System.out.printf("Ahh, not this time:)\nYou matched %s out of %s pairs.\n",score.getMatchedPairs(), WORD_PAIRS);

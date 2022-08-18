@@ -1,5 +1,8 @@
 package main;
 
+/**
+ * This is a model class to hold score data.
+ */
 public class Record implements Comparable{
 
     public String getName() {
@@ -26,12 +29,12 @@ public class Record implements Comparable{
         this.guessingTime = guessingTime;
     }
 
-    public int getGuessingTires() {
-        return guessingTires;
+    public int getGuessingTries() {
+        return guessingTries;
     }
 
-    public void setGuessingTires(int guessingTires) {
-        this.guessingTires = guessingTires;
+    public void setGuessingTries(int guessingTries) {
+        this.guessingTries = guessingTries;
     }
 
     public String[] getVariablesList() {
@@ -42,45 +45,8 @@ public class Record implements Comparable{
         this.variablesList = variablesList;
     }
 
-    public String getVaraiblesString() {
-        return varaiblesString;
-    }
-
     public void setVaraiblesString(String varaiblesString) {
         this.varaiblesString = varaiblesString;
-    }
-
-    private String name;
-    private String date;
-    private long guessingTime;
-    private int guessingTires;
-
-    private String[] variablesList;
-    private String varaiblesString;
-
-    public Record(String data) {
-
-        varaiblesString = data;
-        variablesList = varaiblesString.split("\\|");
-        this.name = variablesList[0];
-        this.date = variablesList[1];
-        this.guessingTime = Long.parseLong(variablesList[2]);
-        this.guessingTires = Integer.parseInt(variablesList[3]);
-    }
-
-    public void print(){
-        System.out.println(varaiblesString);
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        long compareTime = ((Record)o).getGuessingTime();
-        return (int) (this.guessingTime - compareTime);
-    }
-
-    @Override
-    public String toString() {
-        return varaiblesString;
     }
 
 }
