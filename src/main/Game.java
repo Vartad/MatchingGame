@@ -1,6 +1,5 @@
 package main;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static java.lang.Boolean.parseBoolean;
@@ -151,10 +150,10 @@ public class Game {
                 input = validation.get("input");
             }
             while (!parseBoolean(validation.get("valid")));
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
             String[] scoreRecord = new String[]{
                     input,
-                    formatter.format(new Date()),
+                    DATE_FORMATTER.format(new Date()),
                     Long.toString(score.getEndTime()),
                     Integer.toString(score.getCHANCES_START()-score.getChances())
             };

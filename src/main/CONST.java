@@ -1,5 +1,7 @@
 package main;
 
+import java.text.SimpleDateFormat;
+
 /**
  * class contains all global constants used in program
  */
@@ -11,4 +13,6 @@ public class CONST {
     //To separate data between boards prints.
     public static final String YES = "yes";
     public static final String NO = "no";
+
+    public static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("dd/MM/yyyy");
 }
