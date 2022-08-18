@@ -66,6 +66,22 @@ public class UI {
         return result;
     }
 
+    public static HashMap<String, String>validateUserName(String input){
+        result = new HashMap<>();
+        INPUT = input.toLowerCase(Locale.ROOT);
+        validateGamePhrases();
+        if (INPUT.length()>15) {
+            System.out.println("Try to come up with a nickname");
+            result.put("valid", "false");
+            return result;
+        }else{
+            result.put("input", input);
+            result.put("valid", "true");
+            return result;
+            }
+    }
+
+
     /**
      * Validates user's input for options available during whole game. Called at the beginning of every validation method.
      * available options:
