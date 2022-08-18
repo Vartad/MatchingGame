@@ -40,7 +40,11 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String input = YES;
         UI.showWelcomeMessage();
-        Score.top10();
+        try {
+            Score.top10();
+        }catch (Exception e){
+            System.out.println("Scores file seems to be damaged, consider deleting it");
+        }
         UI.showInstruction();
         while(input.equals(YES)) {
             try {

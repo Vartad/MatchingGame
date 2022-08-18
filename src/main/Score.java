@@ -5,8 +5,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.Math.pow;
-import static main.CONST.DIVIDING_LINE_SHORT;
-import static main.CONST.HARD;
+import static main.CONST.*;
 
 /**
  * This is a model class to hold game's score information, track it, preform needed operations.
@@ -109,6 +108,7 @@ public class Score {
      */
     public static Record[] top10() {
         try {
+
             ArrayList<Record> records = new ArrayList<>();
             ArrayList<String> allScores ;
 
@@ -124,11 +124,18 @@ public class Score {
             Collections.sort(records);
             Record [] top10 = new Record[10];
             int n = Math.min(records.size(), 10);
+            topScoresHeadersRow();
             for(int i = 0; i < n; i++) {
                 top10[i] = records.get(i);
             }
+            StringBuilder row = new StringBuilder();
             for(int i=1;i<=top10.length;i++){
-                System.out.println(i+". "+ top10[i-1]);
+                row.append(String.format(HEADERS_WIDTH[0],i));
+                for (int j = 1; j< HEADERS_WIDTH.length; j++) {
+                    row.append(String.format(HEADERS_WIDTH[j],top10[i-1].getVariablesList()[j-1]));
+                }
+                System.out.println(row);
+                row = new StringBuilder();
             }
             System.out.println();
             return top10;
@@ -136,6 +143,27 @@ public class Score {
             System.out.println("No top scores saved yet.\n");
         }
         return new Record[0];
+    }
+
+    public static void topScoresHeadersRow(){
+//        StringBuilder rowLine = new StringBuilder();
+//        StringBuilder bottomLine = new StringBuilder();
+        String[] HEADERS=new String[]{
+                "Pos",
+                "Name",
+                "Date",
+                "Time",
+                "Tries"};
+
+        StringBuilder headers = new StringBuilder();
+        for (int i=0;i<HEADERS.length;i++) {
+            headers.append(String.format(HEADERS_WIDTH[i],HEADERS[i]));
+        }
+//        for(int i=0;i<headers.length();i++){
+//            rowLine.append("_");
+//
+//        }
+        System.out.println(headers);
     }
 
     public int getChances() {

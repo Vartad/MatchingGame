@@ -77,7 +77,7 @@ public class UI {
         result = new HashMap<>();
         INPUT = input.toLowerCase(Locale.ROOT);
         validateGamePhrases();
-        if (INPUT.length()>15) {
+        if (INPUT.length()>ALLOWED_NAME_LENGTH) {
             System.out.println("Try to come up with a nickname");
             result.put("valid", "false");
             return result;
