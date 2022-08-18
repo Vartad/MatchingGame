@@ -3,6 +3,7 @@ package main;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *  This is a model class to hold all methods and data to manipulate files.
@@ -10,7 +11,6 @@ import java.util.ArrayList;
 public class FilesIO {
 
     public static final String SCORE_FILE = "scores.txt";
-    private static final String COL_WIDTH = "14";
 
     /**
      * Loads data from a "txt" file and saves it as a WORDS variable
@@ -34,9 +34,18 @@ public class FilesIO {
         return WORDS;
     }
 
-    public static File loadFile(String fileName) throws IOException {
+    public static ArrayList<String> loadFile(String fileName) throws IOException {
         String path = new File(".").getCanonicalPath();
-        return new File(path+"/"+fileName);
+        File file = new File(path+"/"+fileName);
+        Scanner sc = new Scanner(file);
+        ArrayList<String> filesData= new ArrayList<>();
+        while (sc.hasNextLine())
+        {
+            filesData.add(sc.nextLine());
+        }
+        sc.close();
+        return filesData;
+
     }
 
     public static void writeToFile(String fileName, String text) {
@@ -55,7 +64,7 @@ public class FilesIO {
         StringBuilder line = new StringBuilder();
         line.append(scoreRecord[0]);
         for (int i=1;i<scoreRecord.length;i++) {
-            line.append(String.format("%"+COL_WIDTH+"s", scoreRecord[i]));
+            line.append(String.format("|%s", scoreRecord[i]));
         }
         line.append("\n");
         writeToFile(SCORE_FILE, String.valueOf(line));

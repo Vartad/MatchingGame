@@ -1,6 +1,7 @@
 package main;
 
-import java.util.Date;
+import java.io.IOException;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.Math.pow;
@@ -122,5 +123,21 @@ public class Score {
     public void incrementMatchedTiles() {
         matchedPairs++;
     }
+
+    public static void top10() throws IOException {
+        ArrayList<Record> records = new ArrayList<>();
+        ArrayList<String> allScores = FilesIO.loadFile(FilesIO.SCORE_FILE);
+        System.out.println("all saved scores:\n");
+        for (String score: allScores)
+        {
+            records.add(new Record(score));
+        }
+        Collections.sort(records);
+        for(Record record : records){
+            record.print();
+        }
+
+    }
+
 
 }

@@ -3,6 +3,7 @@ package main;
 import main.exceptions.QuitException;
 import main.exceptions.RestartException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -35,7 +36,7 @@ public class Main {
         }
     }
 
-    private static void game() {
+    private static void game() throws IOException {
         ArrayList<String> WORDS = FilesIO.loadResourcesFile("Words.txt");
         Scanner scanner = new Scanner(System.in);
         String input = YES;
