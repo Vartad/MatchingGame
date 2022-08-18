@@ -15,7 +15,7 @@ public class CONST {
     public static final String NO = "no";
     public static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("dd/MM/yyyy");
     public static final String TEST_FILE = "testFile.txt";
-    public static final         String[] HEADERS_WIDTH =new String[]{
+    public static final String[] HEADERS_WIDTH =new String[]{
             "|%-4s", //pos
             "|%-17s", //Name
             "|%-11s", //Date

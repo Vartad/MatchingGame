@@ -12,7 +12,9 @@ import static main.CONST.DIVIDING_LINE_LONG;
  */
 class Board {
 
-    private final HashMap<String, Tile> board = new HashMap<>();
+    private final int BOARD_WIDTH = 4;
+    private final char [] BOARD_HEIGHT = new char[]{'A','B','C','D'};
+    private HashMap<String, Tile> board = new HashMap<>();
      /**The Formatting value to print tiles equally spaced. It is the length of the longest
       * word in the running game.
       * @see Board() Constructor
@@ -27,17 +29,18 @@ class Board {
      */
     public Board(ArrayList<String> words) {
         int tmpLongestWordLength = 0;
-        for (int i = 0; i < words.size(); i++) {
-            Tile tile = new Tile(words.get(i));
-            if (i < words.size() / 2) {
-                tile.setCoor("A" + (i + 1));
-            } else {
-                tile.setCoor("B" + (words.size() - i));
-            }
-            tile.setContent("X");
-            board.put(tile.getCoor(),tile);
-            if (words.get(i).length() > tmpLongestWordLength) {
-                tmpLongestWordLength = words.get(i).length();
+        int wordCounter = 0;
+        for(int i = 0;i< words.size()/4;i++){
+            char verticalCoor = BOARD_HEIGHT[i];
+            for(int j=0;j<BOARD_WIDTH;j++){
+                Tile tile = new Tile(words.get(wordCounter));
+                tile.setCoor(verticalCoor + Integer.toString(j + 1));
+                tile.setContent("X");
+                board.put(tile.getCoor(),tile);
+                if (words.get(wordCounter).length() > tmpLongestWordLength) {
+                    tmpLongestWordLength = words.get(i).length();
+                }
+                wordCounter++;
             }
         }
         COLUMNFORMAT = "%" + (tmpLongestWordLength+1) + "s";
@@ -51,28 +54,29 @@ class Board {
      * Prints the board.
      */
     public void show(){
+
         System.out.println(DIVIDING_LINE_LONG+DIVIDING_LINE_LONG);
         //print column headers
         StringBuilder line = new StringBuilder();
         line.append(String.format(COLUMNFORMAT, ' '));
-        for (int i =1;i<=board.size()/2;i++) {
+        for (int i =1;i<=BOARD_WIDTH;i++) {
             line.append(String.format(COLUMNFORMAT, i));
         }
         System.out.println(line);
         //print rows
         line = new StringBuilder();
-        line.append(String.format(COLUMNFORMAT, "A"));
         ArrayList<String> sortedKeys = new ArrayList<>(board.keySet());
         Collections.sort(sortedKeys);
-        int i = 0;
-        for(String tileCoor : sortedKeys){
-            line.append(String.format(COLUMNFORMAT, board.get(tileCoor).getContent()));
-            if ((i+1 )%(board.size()/2) ==0) {
-                System.out.println(line);
-                line = new StringBuilder();
-                line.append(String.format(COLUMNFORMAT, "B"));
+        int rowCounter = 0;
+        for(int i = 0;i< board.size()/4;i++){
+            line.append(String.format(COLUMNFORMAT, BOARD_HEIGHT[i]));
+            for(int j=0;j<BOARD_WIDTH;j++){
+                String tileCoor = sortedKeys.get(j+rowCounter);
+                line.append(String.format(COLUMNFORMAT, board.get(tileCoor).getContent()));
             }
-            i++;
+            rowCounter+=BOARD_WIDTH;
+            System.out.println(line);
+            line = new StringBuilder();
         }
         System.out.println(DIVIDING_LINE_LONG+DIVIDING_LINE_LONG);
     }
