@@ -118,20 +118,13 @@ public class Game {
      */
     private ArrayList<String> randomizeWords(int wordsPairs,ArrayList<String> loadedWords){
         ArrayList<String> words = new ArrayList<>();
-        int randNum;
-        boolean duplicate = false;
+        int randNum = (int)(Math.random()*loadedWords.size());
         for(int i=0;i<wordsPairs;i++){
-            randNum = (int)(Math.random()*loadedWords.size());
-            for(String word:words){
-                if (word.equals(loadedWords.get(randNum))) {
-                    duplicate = true;
-                    break;
-                }
+            while(words.contains(loadedWords.get(randNum))){
+                randNum = (int)(Math.random()*loadedWords.size());
             }
-            if(!duplicate){
-                words.add(loadedWords.get(randNum));
-                words.add(loadedWords.get(randNum));
-            }
+            words.add(loadedWords.get(randNum));
+            words.add(loadedWords.get(randNum));
         }
         Collections.shuffle(words);
         return words;

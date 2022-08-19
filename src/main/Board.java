@@ -14,7 +14,7 @@ class Board {
 
     private final int BOARD_WIDTH = 4;
     private final char [] BOARD_HEIGHT = new char[]{'A','B','C','D'};
-    private HashMap<String, Tile> board = new HashMap<>();
+    private final HashMap<String, Tile> board = new HashMap<>();
      /**The Formatting value to print tiles equally spaced. It is the length of the longest
       * word in the running game.
       * @see Board() Constructor
@@ -38,7 +38,7 @@ class Board {
                 tile.setContent("X");
                 board.put(tile.getCoor(),tile);
                 if (words.get(wordCounter).length() > tmpLongestWordLength) {
-                    tmpLongestWordLength = words.get(i).length();
+                    tmpLongestWordLength = words.get(wordCounter).length();
                 }
                 wordCounter++;
             }
