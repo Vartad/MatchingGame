@@ -140,17 +140,18 @@ public class UI {
         result = new HashMap<>();
         INPUT = input.toLowerCase(Locale.ROOT);
         validateGamePhrases();
+        INPUT = input.toUpperCase(Locale.ROOT);
         // Tile's coordinate length is always 2
-        if(INPUT.length()!=2){
+        if(input.length()!=2){
             result.put("valid","false");
             return result;
         }
-        if(board.getTile(input)==null){
+        if(board.getTile(INPUT)==null){
             System.out.println("There is no such a tile. Coordinate has to consist of a row and a column  values eg 'A1'");
             result.put("valid","false");
             return result;
         }
-        result.put("input", input);
+        result.put("input", INPUT);
         result.put("valid", "true");
         return result;
     }
