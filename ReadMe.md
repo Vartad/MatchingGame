@@ -41,7 +41,6 @@ List the ready features here:
 - Two difficulty levels (changes number of guessing chances and pairs of words to match)
 - Play again
 - show game statistics while playing (chances left, time)
-<!-- - save high score -->
 - save score
 - record all scores, show the top 10
 - estimates time, guesses, and difficulty as a single score
