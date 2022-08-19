@@ -1,16 +1,19 @@
 package main;
 
-import java.util.*;
+import main.Score.ScoreManager;
 
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 import static java.lang.Boolean.parseBoolean;
 import static main.CONST.*;
+import static main.FilesIO.saveScoreRecord;
 
 /**
  * This is a model class to hold game information and methods. Here is game logic.
  */
 public class Game {
     private Tile previousTile;  //Tile object of a previously picked Tile
-    private Score score;    //Score object to track score and count time.
+    private final ScoreManager score;    //Score object to track score and count time.
     private final Board BOARD;  //Board object of a currently running game.
     private final int WORD_PAIRS;    //Number of pairs of words.
 
@@ -22,23 +25,17 @@ public class Game {
      *  String, the difficulty level that determines the parameters of a game.
      * @param inputWords
      *  ArrayList of words from which will be randomized words for a game.
-     * @see Score keep track of chances.
+     * @see ScoreManager keep track of chances.
      */
-    public Game(String difficulty, ArrayList<String> inputWords){
-        score = new Score(difficulty);
+    public Game(String difficulty, ArrayList<String> inputWords) throws Exception {
         if(difficulty.equals(EASY)){
-            score.setChances(10);
+            score = new ScoreManager(difficulty,10);
             WORD_PAIRS = 4;
         } else if (difficulty.equals(HARD)) {
-            score.setChances(15);
+            score = new ScoreManager(difficulty,15);
             WORD_PAIRS = 8;
-        }else{
-            //TODO: remove this case, handle user interface errors.
-            //left only for testing purposes in development!!
-            //making use of this bug till it exists.
-            score = new Score(EASY);
-            score.setChances(4);
-            WORD_PAIRS = 2;
+        }else {
+            throw new Exception();
         }
         ArrayList<String> randomizedWords = randomizeWords(WORD_PAIRS,inputWords);
         BOARD = new Board(randomizedWords);
@@ -50,10 +47,8 @@ public class Game {
     public void run(){
         Scanner scanner = new Scanner(System.in);
         //allow user to pick tiles till they have guess chances.
-        while (score.getChances()>=1){
-            System.out.println(DIVIDING_LINE_LONG);
+        while (score.getChances()>0){
             score.showScore();
-            System.out.println(DIVIDING_LINE_SHORT);
             BOARD.show();
             String input;
             HashMap<String, String> validation;
@@ -71,17 +66,25 @@ public class Game {
                 //then there won't be any.
                 if(previousTile != null) {
                     if (previousTile.getWORD().equals(chosenTile.getWORD())) {
-                        //matching tiles are matched. Keep them visible, set that they are matched.
+                        // Keep them visible, set that they are matched.
                         BOARD.getTile(previousTile.getCoor()).setMatched();
                         BOARD.getTile(chosenTile.getCoor()).setMatched();
                         previousTile.setMatched();
                         previousTile = null;
-                        score.incrementMatchedTiles();
-                        score.incrementChances();
+                        score.incrementGuesses();
                     }else {
-                        //picked Tile is not matching previously picked tile. Hide previous tile.
+                        //picked Tile is not matching previously picked tile. Hide both tiles, decrement chances.
+                        BOARD.show();
+                        try {
+                            TimeUnit.SECONDS.sleep(1);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
                         previousTile.setContent("X");
-                        previousTile = chosenTile;
+                        previousTile = null;
+                        chosenTile.setContent("X");
+                        score.decrementChances();
+                        score.incrementGuesses();
                     }
                 }else{
                     //there is no previously picked tile.
@@ -92,20 +95,15 @@ public class Game {
                 if(chosenTile.isMatched()){
                     System.out.println("You already matched this one, try another.");
                 }else {
-                    System.out.println("You just choose this one, try another one.");
+                    System.out.println("You just choose this one, try another.");
                 }
-                //For picking the same tile chances counter won't decrement
-                score.incrementChances();
             }
-            score.decrementChances();
             if(checkGameEnd()){
-                System.out.println("Congratulations! You matched all words.\nYour final score is:");
-                score.showFinalScore();
+                gameWon();
                 return;
             }
         }
-        System.out.printf("Ahh, not this time:)\nYou matched %s out of %s pairs. Your final score is: \n",score.getMatchedPairs(), WORD_PAIRS);
-        score.showFinalScore();
+        gameLost();
     }
 
     /**
@@ -120,9 +118,11 @@ public class Game {
      */
     private ArrayList<String> randomizeWords(int wordsPairs,ArrayList<String> loadedWords){
         ArrayList<String> words = new ArrayList<>();
-        int randNum;
+        int randNum = (int)(Math.random()*loadedWords.size());
         for(int i=0;i<wordsPairs;i++){
-            randNum = (int)(Math.random()*loadedWords.size());
+            while(words.contains(loadedWords.get(randNum))){
+                randNum = (int)(Math.random()*loadedWords.size());
+            }
             words.add(loadedWords.get(randNum));
             words.add(loadedWords.get(randNum));
         }
@@ -141,4 +141,47 @@ public class Game {
         return true;
     }
 
+    /**
+     * Method executes set of instructions if user wins:
+     * <ul>
+     *     <li>allow to save score</li>
+     *     <li>shows top 10 scores</li>
+     * </ul>
+     */
+    private void gameWon(){
+        score.finish();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Congratulations! You matched all words.\nYour final score is:");
+        BOARD.show();
+        score.showFinalScore();
+        System.out.println("Would you like to save you score?");
+        if(scanner.nextLine().toLowerCase(Locale.ROOT).equals("yes")){
+            String input;
+            HashMap<String, String> validation;
+            do {
+                System.out.println("\nWhat is your name?");
+                validation = UI.validateUserName(scanner.nextLine());
+                input = validation.get("input");
+            }
+            while (!parseBoolean(validation.get("valid")));
+
+            String[] scoreRecord = new String[]{
+                    input,
+                    DATE_FORMATTER.format(new Date()),
+                    Long.toString(score.getEndTime()),
+                    Integer.toString(score.getGuesses())
+            };
+            saveScoreRecord(scoreRecord);
+        }
+        ScoreManager.top10();
+    }
+    /**
+     * Method executes set of instructions if user loses
+     */
+    private void gameLost(){
+        score.finish();
+        System.out.printf("Ahh, not this time:)\nYou matched %s out of %s pairs.\n",score.getMatchedPairs(), WORD_PAIRS);
+        score.showFinalScore();
+        ScoreManager.top10();
+    }
 }

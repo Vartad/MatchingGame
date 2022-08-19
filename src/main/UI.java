@@ -1,5 +1,6 @@
 package main;
 
+import main.Score.ScoreManager;
 import main.exceptions.QuitException;
 import main.exceptions.RestartException;
 
@@ -67,6 +68,42 @@ public class UI {
     }
 
     /**
+     * Validates user's input for name after won game.
+     * @param input String data inserted by user.
+     * @return
+     *  "valid" : if valid "true", otherwise "false"
+     *  "input" : validated input
+     */
+    public static HashMap<String, String>validateUserName(String input){
+        result = new HashMap<>();
+        INPUT = input.toLowerCase(Locale.ROOT);
+        validateGamePhrases();
+        if (INPUT.length()>ALLOWED_NAME_LENGTH) {
+            System.out.println("Try to come up with a nickname");
+            result.put("valid", "false");
+            return result;
+        }
+        if (input.length()==0){
+            result.put("valid", "false");
+            return result;
+        }
+        if (input.contains(" ")){
+            result.put("valid", "false");
+            return result;
+        }
+        if (input.contains("|")){
+                System.out.println("You can't use '|' in your name");
+                result.put("valid", "false");
+                return result;
+            }
+        result.put("input", input);
+        result.put("valid", "true");
+        return result;
+
+    }
+
+
+    /**
      * Validates user's input for options available during whole game. Called at the beginning of every validation method.
      * available options:
      * @throws QuitException to quit the game.
@@ -80,12 +117,13 @@ public class UI {
      */
     public static void validateGamePhrases(){
         if(INPUT.contains("help")) showInstruction();
-        if (INPUT.contains("quit")||INPUT.contains("restart")){
+        if (INPUT.contains("quit")||INPUT.contains("restart")||INPUT.contains("top scores")){
             System.out.println("Are you sure you want to "+ INPUT+"? (yes/no)");
             Scanner scanner = new Scanner(System.in);
             if (scanner.nextLine().toLowerCase(Locale.ROOT).equals(YES)) {
                 if (INPUT.contains("quit")) throw new QuitException("See you next time :D");
                 if (INPUT.contains("restart")) throw new RestartException("let's start over");
+                if (INPUT.contains("top scores")) ScoreManager.top10();
             }
         }
     }
@@ -102,17 +140,18 @@ public class UI {
         result = new HashMap<>();
         INPUT = input.toLowerCase(Locale.ROOT);
         validateGamePhrases();
+        INPUT = input.toUpperCase(Locale.ROOT);
         // Tile's coordinate length is always 2
-        if(INPUT.length()!=2){
+        if(input.length()!=2){
             result.put("valid","false");
             return result;
         }
-        if(board.getTile(input)==null){
+        if(board.getTile(INPUT)==null){
             System.out.println("There is no such a tile. Coordinate has to consist of a row and a column  values eg 'A1'");
             result.put("valid","false");
             return result;
         }
-        result.put("input", input);
+        result.put("input", INPUT);
         result.put("valid", "true");
         return result;
     }
@@ -131,7 +170,8 @@ public class UI {
                 To quit game insert quit.
                 To see help  insert help.
                 To restart   insert restart.
-
+                to show top scores insert top scores
+                
                 """);
     }
 

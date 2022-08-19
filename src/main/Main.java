@@ -1,8 +1,10 @@
 package main;
 
+import main.Score.ScoreManager;
 import main.exceptions.QuitException;
 import main.exceptions.RestartException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -27,18 +29,23 @@ public class Main {
     public static void main(String[] args) {
         try{
             game();
-        } catch (QuitException e) {
-            System.out.println(e.getMessage());
-        } catch (Exception qe){
-            System.out.println("Ehh, something go wrong.");
+        } catch (QuitException qe) {
+            System.out.println(qe.getMessage());
+        } catch (Exception e){
+            System.out.println("Quit game");
         }
     }
 
-    private static void game() {
-        FilesIO.loadFile("Words.txt");
+    private static void game(){
+        ArrayList<String> WORDS = FilesIO.loadResourcesFile("Words.txt");
         Scanner scanner = new Scanner(System.in);
         String input = YES;
         UI.showWelcomeMessage();
+        try {
+            ScoreManager.top10();
+        }catch (Exception e){
+            System.out.println("Scores file seems to be damaged, consider deleting it");
+        }
         UI.showInstruction();
         while(input.equals(YES)) {
             try {
@@ -49,7 +56,7 @@ public class Main {
                     input = validation.get("input");
                 }
                 while (!parseBoolean(validation.get("valid")));
-                Game game = new Game(input, FilesIO.getWords());
+                Game game = new Game(input, WORDS);
                 game.run();
                 do {
                     System.out.println("Would you like to play again?");
@@ -59,6 +66,8 @@ public class Main {
                 while (!parseBoolean(validation.get("valid")));
             }catch (RestartException re){
                 input = YES;
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         }
     }
