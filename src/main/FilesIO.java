@@ -53,9 +53,7 @@ public class FilesIO {
             FileWriter myWriter = new FileWriter(fileName,true);
             myWriter.write(text);
             myWriter.close();
-            System.out.println("Successfully saved.");
         } catch (IOException e) {
-            System.out.println("An error occurred.");
             e.printStackTrace();
         }
     }
