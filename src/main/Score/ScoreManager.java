@@ -2,12 +2,14 @@ package main.Score;
 
 import main.FilesIO;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.Math.pow;
 import static main.CONST.*;
+import static main.FilesIO.SCORE_FILE;
 
 /**
  * This is a model class to hold game's score information, track it, preform needed operations.
@@ -140,6 +142,11 @@ public class ScoreManager {
                 row = new StringBuilder();
             }
             System.out.println();
+            File scoreFile = new File(SCORE_FILE);
+            scoreFile.delete();
+            for(Record record: top10){
+                FilesIO.saveScoreRecord(record.getVariablesList());
+            }
             return top10;
         }catch (IOException e){
             System.out.println("No top scores saved yet.\n");
