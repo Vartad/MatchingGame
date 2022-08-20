@@ -155,8 +155,7 @@ public class ScoreManager {
     }
 
     public static void topScoresHeadersRow(){
-//        StringBuilder rowLine = new StringBuilder();
-//        StringBuilder bottomLine = new StringBuilder();
+
         String[] HEADERS=new String[]{
                 "Pos",
                 "Name",

@@ -38,7 +38,7 @@ public class ScoreTest {
     }
 
     @Test
-    @DisplayName("final score calcualtion test")
+    @DisplayName("final score calculation test")
     public void testCalculateFinalScore() {
         Assertions.assertEquals(score.getFinalScore(), 2500.0, 0);
     }

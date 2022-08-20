@@ -10,7 +10,7 @@ public class Record implements Comparable{
     private long guessingTime; //duration of the game
     private int guessingTries; //number of guesses it took user to win the game.
     private String[] variablesList; //score data stored as list
-    private String varaiblesString; //score data stored as String
+    private String variablesString; //score data stored as String
 
     /**
      * Add data to object from a string taken from a score file
@@ -19,8 +19,8 @@ public class Record implements Comparable{
      */
     public void loadRecord(String data) {
 
-        varaiblesString = data;
-        variablesList = varaiblesString.split("\\|");
+        variablesString = data;
+        variablesList = variablesString.split("\\|");
         this.name = variablesList[0];
         this.date = variablesList[1];
         this.guessingTime = Long.parseLong(variablesList[2]);
@@ -41,7 +41,7 @@ public class Record implements Comparable{
 
     @Override
     public String toString() {
-        return varaiblesString;
+        return variablesString;
     }
 
     public String getName() {
@@ -80,8 +80,8 @@ public class Record implements Comparable{
         return variablesList;
     }
 
-    public void setVaraiblesString(String varaiblesString) {
-        this.varaiblesString = varaiblesString;
+    public void setVariablesString(String variablesString) {
+        this.variablesString = variablesString;
     }
 
 }
