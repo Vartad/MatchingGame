@@ -21,7 +21,9 @@ public class FileIOTest {
     @BeforeEach
     void setUp() {
         File scoreFile = new File(SCORE_FILE);
+        scoreFile.delete();
         File testFile = new File(TEST_FILE);
+        testFile.delete();
     }
 
     @Test
