@@ -1,10 +1,10 @@
 package main;
 
-import main.Score.ScoreManager;
-
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import static java.lang.Boolean.parseBoolean;
+
+import main.score.ScoreManager;
 import static main.CONST.*;
 import static main.FilesIO.saveScoreRecord;
 
@@ -175,6 +175,7 @@ public class Game {
         }
         ScoreManager.top10();
     }
+
     /**
      * Method executes set of instructions if user loses
      */

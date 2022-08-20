@@ -1,14 +1,13 @@
 package main;
 
-import main.Score.ScoreManager;
-import main.exceptions.QuitException;
-import main.exceptions.RestartException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
-
 import static java.lang.Boolean.parseBoolean;
+
+import main.score.ScoreManager;
+import main.exceptions.QuitException;
+import main.exceptions.RestartException;
 import static main.CONST.YES;
 
 /**
@@ -36,6 +35,9 @@ public class Main {
         }
     }
 
+    /**
+     * game's main flow
+     */
     private static void game(){
         ArrayList<String> WORDS = FilesIO.loadResourcesFile("Words.txt");
         Scanner scanner = new Scanner(System.in);

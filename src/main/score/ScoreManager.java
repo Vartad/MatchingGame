@@ -1,20 +1,18 @@
-package main.Score;
+package main.score;
 
-import main.FilesIO;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-
 import static java.lang.Math.pow;
+
 import static main.CONST.*;
-import static main.FilesIO.SCORE_FILE;
+import main.FilesIO;
+import java.io.IOException;
 
 /**
  * This is a model class to hold game's score information, track it, preform needed operations.
  */
 public class ScoreManager {
+
     private int chances;    //Number of Guess chances left.
     private int guesses; //Number of taken guesses
     private int finalScore; //final Score calculated with formula in calculateFinalScore()
@@ -142,11 +140,6 @@ public class ScoreManager {
                 row = new StringBuilder();
             }
             System.out.println();
-            File scoreFile = new File(SCORE_FILE);
-            scoreFile.delete();
-            for(Record record: top10){
-                FilesIO.saveScoreRecord(record.getVariablesList());
-            }
             return top10;
         }catch (IOException e){
             System.out.println("No top scores saved yet.\n");
@@ -155,8 +148,7 @@ public class ScoreManager {
     }
 
     public static void topScoresHeadersRow(){
-//        StringBuilder rowLine = new StringBuilder();
-//        StringBuilder bottomLine = new StringBuilder();
+
         String[] HEADERS=new String[]{
                 "Pos",
                 "Name",

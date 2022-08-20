@@ -58,6 +58,11 @@ public class FilesIO {
         }
     }
 
+    /**
+     * Saves the score data to a file
+     * @param scoreRecord
+     * String data of score record
+     */
     public static void saveScoreRecord(String[] scoreRecord){
         StringBuilder line = new StringBuilder();
         line.append(scoreRecord[0]);
