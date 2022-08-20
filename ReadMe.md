@@ -52,7 +52,7 @@ List the ready features here:
 ![screenshot](readMeResources/hard.png)
 
 ## Project Status
-The project is: _on Hold_. Working on improvement of UI.code, unit tests, GUI.
+The project is: _on Hold_. Working on improvement of UI.java code, unit tests, creating GUI.
 
 ## Room for Improvement
 The Main field of improvement is reliability. Although it seems reliable after manual testing,
