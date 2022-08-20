@@ -1,14 +1,13 @@
 package main;
 
-import main.score.ScoreManager;
-import main.exceptions.QuitException;
-import main.exceptions.RestartException;
-
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Scanner;
 
 import static main.CONST.*;
+import main.score.ScoreManager;
+import main.exceptions.QuitException;
+import main.exceptions.RestartException;
 
 /**
  * This is a model class to hold validation methods and messages printing methods.

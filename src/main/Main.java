@@ -1,14 +1,13 @@
 package main;
 
-import main.score.ScoreManager;
-import main.exceptions.QuitException;
-import main.exceptions.RestartException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
-
 import static java.lang.Boolean.parseBoolean;
+
+import main.score.ScoreManager;
+import main.exceptions.QuitException;
+import main.exceptions.RestartException;
 import static main.CONST.YES;
 
 /**

@@ -1,10 +1,10 @@
 package main;
 
-import main.score.ScoreManager;
-
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import static java.lang.Boolean.parseBoolean;
+
+import main.score.ScoreManager;
 import static main.CONST.*;
 import static main.FilesIO.saveScoreRecord;
 
