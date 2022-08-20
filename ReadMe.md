@@ -47,9 +47,9 @@ List the ready features here:
 
 
 ## Screenshots
-![screenshot](./readMe/welcomeMessage.png)
+![screenshot](readMeResources/welcomeMessage.png)
 
-![screenshot](./readMe/hard.png)
+![screenshot](readMeResources/hard.png)
 
 ## Project Status
 The project is: _in progress_.
@@ -59,6 +59,7 @@ The Main field of improvement is reliability. Although it seems reliable after m
 included automated tests are not sufficient. 
 
 Room for improvement:
-- testing
+- testing (especially validation methods)
 - GUI
 - database (consider : SQLite, JSON)
+- UI, validation methods 
