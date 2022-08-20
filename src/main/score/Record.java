@@ -1,4 +1,4 @@
-package main.Score;
+package main.score;
 
 /**
  * This is a model class to hold score data.
@@ -9,7 +9,6 @@ public class Record implements Comparable{
     private String date; //time when saving score
     private long guessingTime; //duration of the game
     private int guessingTries; //number of guesses it took user to win the game.
-
     private String[] variablesList; //score data stored as list
     private String varaiblesString; //score data stored as String
 
@@ -79,10 +78,6 @@ public class Record implements Comparable{
 
     public String[] getVariablesList() {
         return variablesList;
-    }
-
-    public void setVariablesList(String[] variablesList) {
-        this.variablesList = variablesList;
     }
 
     public void setVaraiblesString(String varaiblesString) {

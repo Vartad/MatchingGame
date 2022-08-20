@@ -4,10 +4,10 @@ import static main.CONST.DATE_FORMATTER;
 import static main.FilesIO.saveScoreRecord;
 
 import main.FilesIO;
-import main.Score.Record;
+import main.score.Record;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import main.Score.ScoreManager;
+import main.score.ScoreManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 

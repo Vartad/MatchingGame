@@ -1,6 +1,6 @@
 package main;
 
-import main.Score.ScoreManager;
+import main.score.ScoreManager;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;

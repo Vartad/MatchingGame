@@ -1,6 +1,6 @@
 package main;
 
-import main.Score.ScoreManager;
+import main.score.ScoreManager;
 import main.exceptions.QuitException;
 import main.exceptions.RestartException;
 

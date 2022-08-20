@@ -1,4 +1,4 @@
-package main.Score;
+package main.score;
 
 import main.FilesIO;
 
