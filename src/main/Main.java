@@ -36,6 +36,9 @@ public class Main {
         }
     }
 
+    /**
+     * game's main flow
+     */
     private static void game(){
         ArrayList<String> WORDS = FilesIO.loadResourcesFile("Words.txt");
         Scanner scanner = new Scanner(System.in);

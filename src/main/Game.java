@@ -175,6 +175,7 @@ public class Game {
         }
         ScoreManager.top10();
     }
+
     /**
      * Method executes set of instructions if user loses
      */
