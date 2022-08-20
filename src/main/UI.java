@@ -20,6 +20,40 @@ public class UI {
     // "input" : same input as given or slightly updated
 
     /**
+     * Puts input and validation result in HashMap and returns it.
+     * @return
+     * Hashmap  { "valid" : TRUE/FALSE,
+     *            "input" : input if validation is true
+     *            }
+     */
+    public static HashMap<String, String> validationDecorator() {
+
+        HashMap<String,String> result = new HashMap<>();
+        if(INPUT.equals(FALSE)){
+            result.put("valid",FALSE);
+        }else{
+            result.put("input", INPUT);
+            result.put("valid", TRUE);
+        }
+        return result;
+    }
+
+    /**
+     * Check if inserted string contains allowed phrases.
+     * @param allowedPhrases
+     * String[], list of allowed phrases.
+     */
+    public static void allowedPhrases(String[] allowedPhrases){
+        for (String correct_phrase : allowedPhrases) {
+            if (INPUT.contains(correct_phrase)) {
+                INPUT = correct_phrase;
+                return;
+            }
+        }
+        INPUT = FALSE;
+    }
+
+    /**
      * Validates user's input for difficulty level choice. Used in main loop.
      * @param input String data inserted by user. Expected to be {@link CONST#HARD} or {@link CONST#EASY}
      * @return
@@ -28,19 +62,10 @@ public class UI {
      * @see Main#main(String[])
      */
     public static HashMap<String, String>validateDifficulty(String input){
-        result = new HashMap<>();
         INPUT = input.toLowerCase(Locale.ROOT);
         validateGamePhrases();
-        String[] CORRECT_PHRASES = new String[]{EASY, HARD};
-        for (String correct_phrase : CORRECT_PHRASES) {
-            if (INPUT.contains(correct_phrase)) {
-                result.put("input", correct_phrase);
-                result.put("valid", "true");
-                return result;
-            }
-        }
-        result.put("valid","false");
-        return result;
+        allowedPhrases(new String[]{EASY, HARD});
+        return validationDecorator();
     }
 
     /**
@@ -51,19 +76,12 @@ public class UI {
      *  "input" : validated input
      */
     public static HashMap<String, String>validateGameRestart(String input){
-        result = new HashMap<>();
+
         INPUT = input.toLowerCase(Locale.ROOT);
         validateGamePhrases();
-        String[] CORRECT_PHRASES = new String[]{YES, NO};
-        for (String correct_phrase : CORRECT_PHRASES) {
-            if (INPUT.contains(correct_phrase)) {
-                result.put("input", correct_phrase);
-                result.put("valid", "true");
-                return result;
-            }
-        }
-        result.put("valid","false");
-        return result;
+        allowedPhrases(new String[]{YES, NO});
+        return validationDecorator();
+
     }
 
     /**
@@ -74,7 +92,6 @@ public class UI {
      *  "input" : validated input
      */
     public static HashMap<String, String>validateUserName(String input){
-        result = new HashMap<>();
         INPUT = input.toLowerCase(Locale.ROOT);
         validateGamePhrases();
         if (INPUT.length()>ALLOWED_NAME_LENGTH) {
@@ -100,7 +117,6 @@ public class UI {
         return result;
 
     }
-
 
     /**
      * Validates user's input for options available during whole game. Called at the beginning of every validation method.
